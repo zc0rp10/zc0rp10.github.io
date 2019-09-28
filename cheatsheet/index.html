@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Cheat Sheet</title>
+    <link rel="stylesheet" href="./resources/css/styles.css">
+    <link rel="stylesheet" href="./resources/css/dsystem.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <img class="logo" src="./resources/img/logo_txt_white.png" alt="">
+            <ul>
+                <li><a href="#html">HTML</a></li>
+                <li><a href="#javascript">JavaScript</a></li>
+                <li><a href="#css">CSS</a></li>
+                <li><a href="#typography">Typography</a></li>
+                <li><a href="#designsystem" t>Design System</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    <div class="proto-container">
+        <div class="proto"></div>
+        <div class="proto1"></div>
+        <div class="proto proto2"></div>
+    </div>
+
+    <!--------------------------This is the LEFT side of the webpage------------------>
+    <section class="sleft">
+        <div class="titlecontent">
+            <h1><span class="sone">My</span> <span class="stwo">Cheat</span> <span class="sthree">Sheet</span></h1>
+            <p><strong>The Cheat Sheet contains the most common code snippets:</strong>
+                Such as CSS gradient, background, button, font-family,
+                border, radius, box and text shadow generators, color picker and more. All these and other useful web
+                designer tools can be found on a single page.
+                <br><br>
+                For JavaScript the major categories are Regular Expression syntax, Pattern Modifiers, Arrays, Event
+                Handlers, Strings etc. It incorporates all the methods for string, date, number and math operations, to
+                manage the events and much more.</p>
+        </div>
+    </section>
+
+    <!--------------------------This is the RIGHT side of the webpage------------------>
+    <main class="sright">
+        <article class="rarticle" id="typography">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <h2>Typography Units - Which to use for what</h2>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h3>Prefix</h3>
+                        </th>
+                        <th>
+                            <h3>Name</h3>
+                        </th>
+                        <th>
+                            <h3>Description</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <p class="code">px</p>
+                        </td>
+                        <td>
+                            <p>Pixels</p>
+                        </td>
+                        <td>
+                            <p><b>Use for:</b> borders an drophadows.<br>
+                                <b>Don't use for:</b> typography. (Exception: setting a base font-size in a CSS reset).
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="code">&lt;em&gt;</p>
+                        </td>
+                        <td>
+                            <p>Element</p>
+                        </td>
+                        <td>
+                            <p><b>Use for:</b> typography, and elements related to typography.<br>
+                                <b>Based on:</b> an em unit is relational to it's nearest defined parent elements font
+                                size.
+                                REM is preferable.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="code">&lt;rem&gt;</p>
+                        </td>
+                        <td>
+                            <p>Root Element</p>
+                        </td>
+                        <td>
+                            <p><b>Used as:</b> a more robust and predictable alternative to em and ex, and employed for
+                                the
+                                same purposes, including @media query breakpoints. <br>
+                                <b>Don't use:</b> if you wish to support IE8 and earlier. Or, use the unit but include a
+                                fallback</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="code">&lt;vh & vw&gt;</p>
+                        </td>
+                        <td>
+                            <p>View Heigh & Width</p>
+                        </td>
+                        <td>
+                            <p><b>Use for:</b>responsive typography; “perfect” responsive containers.<br>
+                                <b>Don't use in:</b> media queries, as the viewport will never attain a width of less
+                                than
+                                100vw or a height less than 100vh: by definition, those numbers correspond to the
+                                current
+                                dimensions of the browser window, no matter how large or small the screen or device is.
+                                Be
+                                aware of the unit’s lack of support in IE8.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="code">%</p>
+                        </td>
+                        <td>
+                            <p>Percentage</p>
+                        </td>
+                        <td>
+                            <p><b>Use for:</b> making responsive images and containers; setting height on the body in
+                                some
+                                cases.<br>
+                                <b>Don't use for:</b> typography.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="code">placeholder</p>
+                        </td>
+                        <td>
+                            <p>Table Foot</p>
+                        </td>
+                        <td>
+                            <p>The set of rows defining the footer in a table.</p>
+                        </td>
+                 <tbody>   </tr>
+            </table>
+        </article>
+
+
+
+        <article id="css" class="rarticle">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <h2>CSS Cheat Sheet</h2>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h3>property</h3>
+                        </th>
+                        <th>
+                            <h3>values</h3>
+                        </th>
+                        <th>
+                            <h3>description</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+            </table>
+
+        </article>
+
+        <article class="rarticle" id="javascript">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <h2>JavaScript Cheat Sheet</h2>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h3>property</h3>
+                        </th>
+                        <th>
+                            <h3>values</h3>
+                        </th>
+                        <th>
+                            <h3>description</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>border-color</p>
+                    </td>
+                    <td>
+                        <p>green, white, black</p>
+                    </td>
+                    <td>
+                        <p>changes the color of border of any element</p>
+                    </td>
+                </tr>
+                <tr>
+            </table>
+
+
+        </article>
+
+        <article class="rarticle" id="html">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            <h2>HTML Cheat Sheet</h2>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h3>Tag</h3>
+                        </th>
+                        <th>
+                            <h3>Name</h3>
+                        </th>
+                        <th>
+                            <h3>Description</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tr>
+                    <td>
+                        <p class="code">&lt;table&gt;</p>
+                    </td>
+                    <td>
+                        <p>Table</p>
+                    </td>
+                    <td>
+                        <p> The wrapper element for all HTML tables.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="code">&lt;thead&gt;</p>
+                    </td>
+                    <td>
+                        <p>Table Head</p>
+                    </td>
+                    <td>
+                        <p>The set of rows defining the column headers in a table.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="code">&lt;tbody&gt;</p>
+                    </td>
+                    <td>
+                        <p>Table Body</p>
+                    </td>
+                    <td>
+                        <p>The set of rows containing actual table data.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="code">&lt;tr&gt;</p>
+                    </td>
+                    <td>
+                        <p>Table Row</p>
+                    </td>
+                    <td>
+                        <p>The table row container.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="code">&lt;td&gt;</p>
+                    </td>
+                    <td>
+                        <p>Table Data</p>
+                    </td>
+                    <td>
+                        <p>The table data container.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="code">&lt;tfoot&gt;</p>
+                    </td>
+                    <td>
+                        <p>Table Foot</p>
+                    </td>
+                    <td>
+                        <p>The set of rows defining the footer in a table.</p>
+                    </td>
+                </tr>
+            </table>
+        </article>
+        <section class="designsystem" id="designsystem">
+            <h2>Design System</h2>
+            <article class="container">
+                <h3>Colors</h3>
+                <div class="color-container">
+                    <div class="color-panel light-purple">
+                        <p class="color-label">Light Purple</p>
+                        <p class="color-hex">#8800ff</p>
+                    </div>
+                    <div class="color-panel deep-purple">
+                        <p class="color-label">Deep Purple</p>
+                        <p class="color-hex">#601df7</p>
+                    </div>
+                    <div class="color-panel grey">
+                        <p class="color-label">Grey</p>
+                        <p class="color-hex">#fbfbfb</p>
+                    </div>
+                </div>
+            </article>
+            <article class="container">
+                <h3>Fonts</h3>
+                <div class="font-container">
+                    <div class="font-panel barlow">
+                        <p class="font-label">Barlow</p>
+                        <p class="bold">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="regular">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="italic">The quick brown fox jumps over the lazy dog.</p>
+                    </div>
+                    <div class="font-panel open-sans">
+                        <p class="font-label">Open Sans</p>
+                        <p class="bold">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="regular">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="italic">The quick brown fox jumps over the lazy dog.</p>
+                    </div>
+                    <div class="font-panel fira-code">
+                        <p class="font-label">Fira Code</p>
+                        <p class="bold">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="regular">The quick brown fox jumps over the lazy dog.</p>
+                        <p class="italic">The quick brown fox jumps over the lazy dog.</p>
+                    </div>
+                </div>                
+            </article>
+            <article class="container">
+                <h3>Text Styles</h3>
+                <div class="text-style-container">
+                    <div class="text-panel">
+                        <p>P: This is an example of paragraph text.</p>
+                    </div>
+                    <div class="text-panel">
+                        <h1>Headline 1</h1>
+                        <h2>Headline 2</h2>
+                        <h3>Headline 3</h3>
+                        <h4>Headline 4</h4>
+                        <h5>Headline 5</h5>
+                        <h6>Headline 6</h6>
+                    </div>
+                    <div class="text-panel">
+                        <blockquote>Blockquote: This is an example of blockquote text.</blockquote>
+                    </div>
+                    <div class="text-panel">
+                        <p>This is an unordered list.</p>
+                        <ul>
+                            <li>Item #1</li>
+                            <li>Item #2</li>
+                            <li>Item #3</li>
+                        </ul>
+                        <p>This is an ordered list.</p>
+                        <ol>
+                            <li>Item #1</li>
+                            <li>Item #2</li>
+                            <li>Item #3</li>
+                        </ol>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+    </main>
+    <!--------------------------FOOTER------------------------------------->
+
+    <footer>
+        <p>Bear Design &copy; 2019</p>
+    </footer>
+
+
+    <script src="./resources/js/script.js"></script>
+</body>
+
+</html>

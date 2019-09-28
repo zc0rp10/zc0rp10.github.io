@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css?family=Barlow:400,400i,700|Fira+Code:400,700|Open+Sans:400,400i&display=swap');
+
+h1, h2, h3 ,h4 ,h5 ,h6 {
+    font-family: 'Barlow', sans-serif;
+}
+
+h1 {
+    color: #000;
+    font-size: 2em;
+}
+
+h2 {
+    color: #000;
+}
+
+h3 {
+    color: #000;
+}
+
+
+
+h4 {
+    color: #000;
+}
+
+p { 
+    line-height: 1.7em;
+    font-size: 0.95em;
+}
+
+.container {
+    margin-top: 10vh;
+}
+
+.font-panel {
+    margin-top: 2em;
+}
+
+.text-panel {
+    margin-top: 2em;
+}
+
+.color-container {
+    width: 100%;
+    
+}
+
+.color-panel {
+    display: inline-block;
+    padding: 25px;
+    width: 22%;
+}
+
+.light-purple {
+    background-color: #8800ff;
+    color: #fff;
+}
+
+.deep-purple {
+    background-color: #601df7;
+    color: #fff;
+}
+
+.grey {
+    background-color: #fbfbfb;
+    border: 1px solid black;
+}
+
+.barlow {
+    font-family: 'Barlow', sans-serif;
+}
+
+.open-sans {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.fira-code {
+    font-family: 'Fira Code', monospace;
+}
+
+.font-label {
+    text-decoration: underline;
+}
+
+.bold  {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
