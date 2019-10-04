@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(10496px / 15);
+    height: 702px;
+    background: url(the_bastard_sprite-1.jpg);
+    
+}
+.box:hover { 
+    animation: animate 2s steps(15) infinite;
+}
+
+@keyframes animate {
+    from {
+        background-position: 10496px;
+    }
+    to {
+        background-position: 0px;
+    }
+}
