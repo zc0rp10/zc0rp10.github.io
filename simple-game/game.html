@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .charimage {
+        position: relative;
+      }
+
+      .charimage img {
+        max-height: 245px;
+      }
+
+      #battlefield {
+        display: flex;
+        justify-content: space-between;
+        max-width: 900px;
+        /* display: none; */
+        margin: 0 auto;
+      }
+
+      #victory {
+        display: none;
+        text-align: center;
+      }
+
+      #controls {
+        text-align: center;
+      }
+
+      .activespell {
+        position: absolute;
+        top: 40px;
+        left: 0px;
+      }
+
+      .activespell img {
+        width: 120px;
+        border-radius: 90px;
+      }
+
+      .spell {
+        transition: opacity 2s ease-in;
+      }
+
+      #combatlog {
+        margin: 50px;
+        max-height: 300px;
+      }
+
+      #combatlog p {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="victory">
+      <img src="./GlitteringGenuineGyrfalcon-size_restricted.gif" alt="" />
+    </div>
+    <div id="battlefield">
+      <div class="player1">
+        <div class="charimage">
+          <img src="./cloud.jpeg" alt="" />
+        </div>
+        <div class="charstats">
+          <table>
+            <tr>
+              <td>Name:</td>
+              <td id="playername"></td>
+            </tr>
+            <tr>
+              <td>Health:</td>
+              <td id="playerhealth"></td>
+            </tr>
+            <tr>
+              <td>Mana:</td>
+              <td id="playermana"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="charatt">
+          <br />
+          <input
+            onclick="playerAttack()"
+            id="playerattack"
+            type="button"
+            value="Attack"
+          />
+          <input
+            onclick="playerMagic('fire')"
+            id="playermagic"
+            type="button"
+            value="Fire I"
+          />
+          <input
+            onclick="playerMagic('ice')"
+            id="playermagic"
+            type="button"
+            value="Ice I"
+          />
+        </div>
+      </div>
+      <div id="combatlog"></div>
+      <div class="enemy">
+        <div class="charimage">
+          <img src="./sephiroth.png" alt="" />
+          <div class="activespell">
+            <img id="spell" src="" alt="" />
+          </div>
+        </div>
+        <div class="charstats">
+          <table>
+            <tr>
+              <td>Name:</td>
+              <td id="enemyname"></td>
+            </tr>
+            <tr>
+              <td>Health:</td>
+              <td id="enemyhealth"></td>
+            </tr>
+            <tr>
+              <td>Mana:</td>
+              <td id="enemymana"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="charatt"></div>
+      </div>
+    </div>
+    <div id="controls">
+      <input type="button" value="Start Game" onclick="startGame()" />
+    </div>
+    <script>
+      let player = {
+        charName: "Cloud",
+        charHealth: 100,
+        charMana: 50
+      };
+
+      let enemy = {
+        charName: "Sephiroth",
+        charHealth: 200,
+        charMana: 100
+      };
+
+      let magic = {
+        fire: {
+          name: "Fire I",
+          damage: 30,
+          sound: "fireball.mp3",
+          spellImg: "fireball.png",
+          mpCost: 8
+        },
+        ice: {
+          name: "Ice I",
+          damage: 20,
+          sound: "ice.wav",
+          spellImg: "iceblast.jpg",
+          mpCost: 4
+        }
+      };
+
+      const battleField = document.getElementById("battlefield");
+      const combatLog = document.getElementById("combatlog");
+      const gameControls = document.getElementById("controls");
+      const victoryScreen = document.getElementById("victory");
+      const playerName = document.getElementById("playername");
+      const playerHealth = document.getElementById("playerhealth");
+      const playerMana = document.getElementById("playermana");
+
+      const enemyName = document.getElementById("enemyname");
+      const enemyHealth = document.getElementById("enemyhealth");
+      const enemyMana = document.getElementById("enemymana");
+      const activeSpell = document.getElementById("spell");
+
+      function startGame() {
+        battleField.style.display = "flex";
+        victory.style.display = "none";
+        combatLog.innerHTML = "";
+        player.charHealth = 100;
+        player.charMana = 50;
+        enemy.charHealth = 200;
+        enemy.charMana = 100;
+        gameControls.style.display = "none";
+        updateGame();
+      }
+
+      function updateGame() {
+        playerName.innerHTML = player.charName;
+        playerHealth.innerHTML = player.charHealth;
+        playerMana.innerHTML = player.charMana;
+
+        enemyName.innerHTML = enemy.charName;
+        enemyHealth.innerHTML = enemy.charHealth;
+        enemyMana.innerHTML = enemy.charMana;
+      }
+
+      function playerAttack() {
+        playSound("hit.wav");
+        enemy.charHealth = enemy.charHealth - 10;
+        checkHealth();
+        updateGame();
+        let paragraph = document.createElement("p");
+        paragraph.innerText = `${player.charName} attacks ${enemy.charName}!`;
+        combatLog.appendChild(paragraph);
+      }
+
+      function playerMagic(castMagic) {
+        if (player.charMana - magic[castMagic].mpCost >= 0) {
+          activeSpell.src = magic[castMagic].spellImg;
+          playSound(magic[castMagic].sound);
+          enemy.charHealth = enemy.charHealth - magic[castMagic].damage;
+          player.charMana = player.charMana - magic[castMagic].mpCost;
+          checkHealth();
+          updateGame();
+          let paragraph = document.createElement("p");
+          paragraph.innerText = `${player.charName} casts ${magic[castMagic].name} on ${enemy.charName}!`;
+          combatLog.appendChild(paragraph);
+
+          setTimeout(function() {
+            activeSpell.src = "";
+          }, 1000);
+        } else {
+          alert("Not enough Mana!");
+          playSound("nomana.mp3");
+        }
+      }
+
+      function checkHealth() {
+        if (enemy.charHealth <= 0) {
+          battleField.style.display = "none";
+          victory.style.display = "block";
+          gameControls.style.display = "block";
+          playSound("victory.mp3");
+        }
+      }
+
+      function playSound(sound) {
+        var audio = new Audio("./sounds/" + sound);
+        audio.play();
+      }
+    </script>
+  </body>
+</html>
