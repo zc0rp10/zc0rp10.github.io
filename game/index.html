@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Game</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Acme&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        box-sizing: border-box;
+        font-family: "Acme", sans-serif;
+        text-align: center;
+        margin: 0;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
+      }
+
+      .avatar img {
+        width: 100%;
+        height: auto;
+      }
+
+      .arena {
+        height: 100%;
+        background-color: #130b08;
+        color: #fff;
+      }
+
+      .combat-log {
+        padding: 2%;
+        text-align: left;
+      }
+
+      .combat-log p {
+        margin: 1%;
+      }
+
+      .footer {
+        background-color: #130b08;
+        color: #fff;
+        font-size: 0.75rem;
+      }
+
+      .footer p {
+        margin: 2%;
+      }
+
+      .classname {
+        color: #f8b700;
+      }
+      .stats {
+        color: #b1997f;
+      }
+
+      .statstable {
+        text-align: left;
+        padding-left: 5%;
+      }
+
+      .player,
+      .enemy {
+        display: grid;
+        grid-template-columns: 3fr 4fr;
+        background: url(./assets/img/panel_ligt_bg.jpg);
+      }
+
+      .enemy {
+        padding-top: 5px;
+      }
+
+      .actions {
+        background-color: #211510;
+        padding-top: 1%;
+        padding-bottom: 1%;
+      }
+
+      .action-btn {
+        border: none;
+        height: 64px;
+        width: 64px;
+        padding: 0;
+      }
+
+      .system-btn {
+        border: none;
+        height: 32px;
+        width: 32px;
+      }
+
+      .warrior-attack {
+        background: url(./assets/img/icons/attack.png);
+      }
+
+      .warrior-magic {
+        background: url(./assets/img/icons/magic.png);
+      }
+
+      .warrior-block {
+        background: url(./assets/img/icons/block.png);
+      }
+
+      .inventory-btn {
+        background: url(./assets/img/icons/inventory.png);
+      }
+
+      .character-btn {
+        background: url(./assets/img/icons/character.png);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #130b08;
+        color: #fff;
+      }
+
+      .inventory,
+      .character {
+        height: 32px;
+      }
+
+      .top-bar p {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-bar">
+        <div class="inventory">
+          <input class="system-btn inventory-btn" type="button" value="" />
+        </div>
+        <div class="tasks">
+          <p>Task: Search for an enemy!</p>
+        </div>
+        <div class="character">
+          <input class="system-btn character-btn" type="button" value="" />
+        </div>
+      </div>
+      <div class="player">
+        <div class="avatar">
+          <img
+            id="player-avatar"
+            src="./assets/img/avatars/warrior.jpg"
+            alt=""
+          />
+        </div>
+        <div class="stats">
+          <table class="statstable">
+            <tr>
+              <td class="classname" id="player-class">Warrior</td>
+            </tr>
+            <tr>
+              <td>Level:</td>
+              <td id="player-level"></td>
+            </tr>
+            <tr>
+              <td>Health:</td>
+              <td id="player-health"></td>
+            </tr>
+            <tr>
+              <td>Mana:</td>
+              <td id="player-mana"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="actions">
+        <input
+          id="attack"
+          class="action-btn warrior-attack"
+          type="button"
+          value=""
+          onclick="player.charSkills.attack.useSkill()"
+        />
+        <input
+          id="magic"
+          class="action-btn warrior-magic"
+          type="button"
+          value=""
+        />
+        <input
+          id="block"
+          class="action-btn warrior-block"
+          type="button"
+          value=""
+        />
+      </div>
+      <div class="arena">
+        <div id="combat-log" class="combat-log">
+          <p>[03:13:15] Player has encountered a Troll!</p>
+          <!-- <p>[03:13:20] You hit troll for 13 damage.</p>
+          <p>[03:13:23] Troll's Fireball hits you for 25 damage.</p>
+          <p>[03:13:26] You hit troll for 16 damage.</p> -->
+          <p>[03:13:32] Troll's Iceblast fizzles.</p>
+        </div>
+      </div>
+      <div class="enemy">
+        <div class="avatar">
+          <img id="enemy-avatar" src="./assets/img/avatars/troll.jpg" alt="" />
+        </div>
+        <div class="stats">
+          <table class="statstable">
+            <tr>
+              <td class="classname">Troll</td>
+            </tr>
+            <tr>
+              <td>Level:</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>Health:</td>
+              <td id="enemy-health"></td>
+            </tr>
+            <tr>
+              <td>Mana:</td>
+              <td>50</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="footer">
+        <p>© 2019 | Game Studio: A Bear Design</p>
+      </div>
+    </div>
+    <script src="./assets/js/main.js"></script>
+  </body>
+</html>
