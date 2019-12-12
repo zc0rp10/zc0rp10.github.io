@@ -29,7 +29,7 @@ let gamemanager = {
   checkWin: function() {
     if (enemy.charHealth <= 0) {
       gamemanager.playSound("victory.mp3");
-      enemyAvatar.src = "assets/img/avatars/dead.png";
+      enemyAvatar.src = "./assets/img/avatars/dead.png";
 
       let date = new Date();
       let seconds = date.getSeconds();
@@ -110,11 +110,11 @@ let magic = {
   }
 };
 
-playerAvatar.src = "assets/img/avatars/" + player.charAvatar;
+playerAvatar.src = "./assets/img/avatars/" + player.charAvatar;
 playerClass.innerHTML = player.charClass;
 playerLevel.innerHTML = player.charLevel;
 playerHealth.innerHTML = player.charHealth;
 playerMana.innerHTML = player.charMana;
 
-enemyAvatar.src = "assets/img/avatars/" + enemy.charAvatar;
+enemyAvatar.src = "./assets/img/avatars/" + enemy.charAvatar;
 enemyHealth.innerHTML = enemy.charHealth;
