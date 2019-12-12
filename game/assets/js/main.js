@@ -29,7 +29,7 @@ let gamemanager = {
   checkWin: function() {
     if (enemy.charHealth <= 0) {
       gamemanager.playSound("victory.mp3");
-      enemyAvatar.src = "/assets/img/avatars/dead.png";
+      enemyAvatar.src = "assets/img/avatars/dead.png";
 
       let date = new Date();
       let seconds = date.getSeconds();
@@ -87,7 +87,7 @@ let player = {
 
 let enemy = {
   charClass: "Troll",
-  charAvatar: "warrior.jpg",
+  charAvatar: "troll.jpg",
   charLevel: 1,
   charHealth: 200,
   charMana: 100
@@ -116,4 +116,5 @@ playerLevel.innerHTML = player.charLevel;
 playerHealth.innerHTML = player.charHealth;
 playerMana.innerHTML = player.charMana;
 
+enemyAvatar.src = "assets/img/avatars/" + enemy.charAvatar;
 enemyHealth.innerHTML = enemy.charHealth;
