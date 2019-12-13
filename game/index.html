@@ -21,7 +21,13 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100vh;
+        height: 95vh;
+        max-width: 450px;
+        max-height: 800px;
+      }
+
+      .avatar {
+        position: relative;
       }
 
       .avatar img {
@@ -132,6 +138,15 @@
       .top-bar p {
         margin: 0;
       }
+
+      #active-spell {
+        position: absolute;
+        top: 10px;
+        left: 8px;
+        max-height: 177px;
+        max-width: 177px;
+        border-radius: 90px;
+      }
     </style>
   </head>
   <body>
@@ -177,19 +192,21 @@
           class="action-btn warrior-attack"
           type="button"
           value=""
-          onclick="player.charSkills.attack.useSkill()"
+          onclick="player.charSkills.attack.useAttack()"
         />
         <input
           id="magic"
           class="action-btn warrior-magic"
           type="button"
           value=""
+          onclick="player.charSkills.magic.useMagic()"
         />
         <input
           id="block"
           class="action-btn warrior-block"
           type="button"
           value=""
+          onclick="player.charSkills.block.useBlock()"
         />
       </div>
       <div class="arena">
@@ -203,6 +220,7 @@
       </div>
       <div class="enemy">
         <div class="avatar">
+          <img id="active-spell" src="" alt="" />
           <img id="enemy-avatar" src="" alt="" />
         </div>
         <div class="stats">
