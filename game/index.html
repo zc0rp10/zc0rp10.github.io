@@ -28,6 +28,13 @@
         max-height: 800px;
       }
 
+      .preload img {
+        position: absolute;
+        left: -1000px;
+        height: 100%;
+        font-weight: 64px;
+      }
+
       .avatar {
         position: relative;
       }
@@ -159,13 +166,19 @@
     </style>
   </head>
   <body>
+    <div class="preload">
+      <img src="./assets/img/spells/fireball.png" alt="" />
+      <img src="./assets/img/spells/iceblast.jpg" alt="" />
+      <img src="./assets/img/spells/slash1.png" alt="" />
+      <img src="./assets/img/spells/slash2.png" alt="" />
+    </div>
     <div class="container">
       <div class="top-bar">
         <div class="inventory">
           <input class="system-btn inventory-btn" type="button" value="" />
         </div>
         <div class="tasks">
-          <p>Task: Search for an enemy!</p>
+          <p>Task: Defeat the enemy!</p>
         </div>
         <div class="character">
           <input class="system-btn character-btn" type="button" value="" />
