@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <style>
+      .container {
+        margin: 0 auto;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="rows-parent">
+      <div id="row1" class="invoiceItemRows">
+        <input
+          type="text"
+          name="itemDescription1"
+          id="itemDescription1"
+          class="itemName"
+          value="Articles"
+        />
+        <input
+          type="text"
+          name="itemQty1"
+          id="itemQty1"
+          class="itemName"
+          value="2"
+        />
+        <input
+          type="text"
+          name="itemPrice1"
+          id="itemPrice1"
+          class="itemName"
+          value="350"
+        />
+      </div>
+      <div id="row2" class="invoiceItemRows">
+        <input
+          type="text"
+          name="itemDescription2"
+          id="itemDescription2"
+          class="itemName"
+          value="Content Writing"
+        />
+        <input
+          type="text"
+          name="itemQty2"
+          id="itemQty2"
+          class="itemName"
+          value="1"
+        />
+        <input
+          type="text"
+          name="itemPrice2"
+          id="itemPrice2"
+          class="itemName"
+          value="200"
+        />
+      </div>
+    </div>
+    <button type="button" onclick="addRow()">+ Row</button>
+    <button type="button" onclick="sendData()">Send</button>
+    <button type="button" onclick="renderInvoice()">Render</button>
+    <div id="invoice-company-name"></div>
+    <div id="invoice-payment-status"></div>
+    <div id="invoice-date"></div>
+    <div id="invoice-total-amount"></div>
+    <table>
+      <thead>
+        <tr>
+          <td>Description</td>
+          <td>Qty</td>
+          <td>Price</td>
+        </tr>
+      </thead>
+      <tbody id="item-table"></tbody>
+    </table>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyBiEa4YLP-7E7lpoWGRK2jF1lX1fCd7PmY",
+        authDomain: "cb-invoices.firebaseapp.com",
+        databaseURL: "https://cb-invoices.firebaseio.com",
+        projectId: "cb-invoices",
+        storageBucket: "cb-invoices.appspot.com",
+        messagingSenderId: "934037469865",
+        appId: "1:934037469865:web:fdb572c2eb5e73e8df47b8",
+        measurementId: "G-FEJ51LQCKD"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      const db = firebase.firestore();
+
+      var $ = document.getElementById.bind(document);
+
+      function addRow() {
+        let NoR = document.querySelectorAll(".invoiceItemRows").length + 1;
+        let rowHTML = `<div id="row${NoR}" class="invoiceItemRows">
+      <input
+        type="text"
+        name="itemDescription${NoR}"
+        id="itemDescription${NoR}"
+        class="itemName"
+        value="Articles"
+      />
+      <input
+        type="text"
+        name="itemQty${NoR}"
+        id="itemQty${NoR}"
+        class="itemName"
+        value="2"
+      />
+      <input
+        type="text"
+        name="itemPrice${NoR}"
+        id="itemPrice${NoR}"
+        class="itemName"
+        value="350"
+      />
+    </div>`;
+
+        $("rows-parent").insertAdjacentHTML("beforeend", rowHTML);
+      }
+
+      // SEND ALL THE DATA
+      function sendData() {
+        itemArray = [];
+
+        function createArray() {
+          let nbrOfRows = document.querySelectorAll(".invoiceItemRows").length;
+
+          for (var i = 1; i <= nbrOfRows; i++) {
+            object = {
+              itemDescription: $("itemDescription" + i).value,
+              itemQty: $("itemQty" + i).value,
+              itemPrice: $("itemPrice" + i).value
+            };
+            itemArray.push(object);
+          }
+        }
+        createArray();
+
+        function writeToFirestore() {
+          // Get a new write batch
+          var batch = db.batch();
+          var invRef = db.collection("invoices").doc("invoiceone");
+          var invRef2 = db.collection("settings").doc("--statistics--");
+
+          batch.set(invRef, { invoiceItems: itemArray }, { merge: true });
+          batch.set(invRef, { companyName: "Anke's Writing" }, { merge: true });
+          batch.set(invRef, { paymentStatus: "Paid" }, { merge: true });
+          batch.set(invRef, { totalAmount: 321 }, { merge: true });
+
+          // Commit the batch
+          batch.commit().then(function() {
+            console.log("Completed");
+          });
+        }
+        writeToFirestore();
+      }
+
+      // PRINT ALL THE DATA
+      function renderInvoice() {
+        let docRef = db.collection("invoices").doc("invoiceone");
+        docRef
+          .get()
+          .then(function(doc) {
+            if (doc.exists) {
+              $("invoice-company-name").innerText = doc.data().companyName;
+              $("invoice-payment-status").innerText = doc.data().paymentStatus;
+              $("invoice-date").innerText =
+                "Verzonden op " + doc.data().invoiceDate;
+              $("invoice-total-amount").innerText =
+                "€" + doc.data().totalAmount;
+
+              doc.data().invoiceItems.forEach(val => {
+                rowHTML = `<td>${val.itemDescription}</td><td>${val.itemQty}</td><td>${val.itemPrice}</td>`;
+                $("item-table").insertAdjacentHTML("beforeend", rowHTML);
+              });
+            } else {
+              // doc.data() will be undefined in this case
+              console.log("No such invoice!");
+            }
+          })
+          .catch(function(error) {
+            console.log("Error getting invoice:", error);
+          });
+      }
+
+      function limitTest() {
+        db.collection("cities").add({
+          name1: "Tokyo",
+          name2: "Tokyo",
+          name3: "Tokyo",
+          name4: "Tokyo",
+          name5: "Tokyo",
+          name6: "Tokyo",
+          name7: "Tokyo",
+          name8: "Tokyo",
+          name9: "Tokyo",
+          name10: "Tokyo",
+          name12: "Tokyo",
+          name13: "Tokyo",
+          name14: "Tokyo",
+          name15: "Tokyo",
+          name16: "Tokyo",
+          name17: "Tokyo",
+          name18: "Tokyo",
+          name19: "Tokyo",
+          name20: "Tokyo",
+          name21: "Tokyo",
+          name22: "Tokyo",
+          name23: "Tokyo"
+        });
+      }
+    </script>
+  </body>
+</html>

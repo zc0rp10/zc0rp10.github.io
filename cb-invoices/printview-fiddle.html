@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+    />
+    <title>Document</title>
+    <style>
+      .print-invoice-modal {
+        font-family: "Roboto";
+      }
+      .print-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .print-header h2 {
+        color: #900;
+        font-size: 2rem;
+      }
+      .business-logo img {
+        max-width: 180px;
+        margin-top: 0.83rem;
+      }
+      .business-info p {
+        margin: 0.4rem 0;
+      }
+
+      .print-body {
+        display: flex;
+        flex-direction: column;
+      }
+      .print-body h1 {
+        color: #900;
+        font-size: 4rem;
+        margin: 0;
+      }
+      .print-body h3 {
+        color: rgb(0, 48, 153);
+        font: 2rem;
+      }
+
+      .print-body-details {
+        display: flex;
+        justify-content: space-between;
+      }
+      .details-row h3 {
+        color: #000;
+        margin: 0.4rem 0;
+      }
+      .details-row p {
+        margin: 0.4rem 0;
+      }
+      .print-hr {
+        width: 100%;
+        margin: 20px 0;
+      }
+      .print-invoice-items {
+        text-align: left;
+      }
+      .print-invoice-items th {
+        color: rgb(0, 48, 153);
+        font-size: 1.17rem;
+      }
+      .table-last-child {
+        text-align: right;
+      }
+      .sim-totals p {
+        color: rgb(0, 48, 153);
+        display: inline-block;
+        font-size: 1.5rem;
+      }
+      .sim-totals span {
+        color: #900;
+        font-weight: 700;
+        padding-left: 10px;
+        font-size: 2.5rem;
+      }
+      .sum-row {
+        display: flex;
+        justify-content: space-between;
+      }
+      .print-footer p {
+        text-align: center;
+        font-size: 0.75rem;
+        margin: 0.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="print-invoice-modal">
+      <article class="print-article">
+        <header class="print-header">
+          <div class="business-info">
+            <h2>Blic Media</h2>
+            <p>Carlien Bootsma</p>
+            <p>Hege Wier 26</p>
+            <p>8628EM Goenga</p>
+            <p>Tel: 06 344 74 260</p>
+          </div>
+          <div class="business-logo">
+            <img src="./assets/img/logo_invoice.png" alt="" />
+          </div>
+        </header>
+        <div class="print-body">
+          <h1>Factuur</h1>
+          <h3>Verzonden op 12/04/2019</h3>
+          <div class="print-body-details">
+            <div class="details-row">
+              <h3>Invoice For</h3>
+              <p>Name</p>
+              <p>Company Name</p>
+              <p>Street Address</p>
+              <p>786 50 City</p>
+            </div>
+            <div class="details-row">
+              <h3>Project</h3>
+              <p>786 50 City</p>
+            </div>
+            <div class="details-row">
+              <h3>Invoice #</h3>
+              <p>786 50 City</p>
+              <h3>Due Date</h3>
+              <p>12/05/2019</p>
+            </div>
+          </div>
+          <hr class="print-hr" />
+          <table class="print-invoice-items">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th class="table-last-child">Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Item #1</td>
+                <td>1</td>
+                <td>€200</td>
+                <td class="table-last-child">€200</td>
+              </tr>
+              <tr>
+                <td>Item #2</td>
+                <td>2</td>
+                <td>€50</td>
+                <td class="table-last-child">€100</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr class="print-hr" />
+          <div class="sum-row">
+            <div class="notes">
+              <p>Notes: Thank you!</p>
+            </div>
+            <div class="sim-totals">
+              <p>Subtotal</p>
+              <span>€600</span>
+            </div>
+          </div>
+        </div>
+        <hr class="print-hr" />
+        <footer class="print-footer">
+          <p>
+            Gelieve het bovenstaande bedrag binnen 28 dagen na factuurdatum
+            overmaken op rekeningnummer.
+          </p>
+          <p>
+            NL11 INGB 0689 3278 97 ten name van C. Bootsma onder vermelding van
+            bovenstaand factuurnummer.
+          </p>
+        </footer>
+      </article>
+    </section>
+  </body>
+</html>

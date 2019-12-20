@@ -1,0 +1,378 @@
+* {
+  box-sizing: border-box;
+  font-family: "Varela Round";
+}
+body {
+  background: #f5f5f5;
+  margin: 0;
+}
+
+#site-header {
+  background: #435d7d;
+  color: white;
+  padding: 5px 30px 16px 30px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-btn-row {
+  margin: auto 0;
+}
+header h2 {
+  font-weight: 500;
+}
+
+.wrapper {
+  margin: 30px 0;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+#container {
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+}
+
+.table-responsive {
+  padding: 0 25px 20px 25px;
+}
+
+.table {
+  color: #566787;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.table th,
+td {
+  padding: 12px 15px;
+  font-size: 14px;
+}
+
+.table th {
+  border-bottom: 2px solid rgba(233, 233, 233, 1);
+}
+
+.table td {
+  font-size: 13px;
+  border-top: 1px solid rgba(233, 233, 233, 1);
+}
+
+.table tbody tr:hover {
+  background: #f5f5f5;
+}
+
+.delete-btn,
+.print-btn {
+  background: url(../icons/delete.png);
+  border: none;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+}
+
+.print-btn {
+  background: url(../icons/print.png);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  margin: 15px 0;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  min-width: 100px;
+  cursor: pointer;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.btn-add {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.btn-delete {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+.btn-change {
+  color: #fff;
+  background-color: #f1c026;
+  border-color: #f1c026;
+}
+
+/* Modals */
+
+.modal {
+  display: none;
+  margin: 0 auto;
+}
+
+.modal-dialog {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  color: #435d7d;
+  margin: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  position: absolute;
+  top: 10%;
+  left: 35%;
+}
+
+.modal-header {
+  position: relative;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-body {
+  padding: 20px 30px;
+}
+
+.modal-footer {
+  text-align: center;
+  padding: 20px 30px;
+  background: #ecf0f1;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+  background: transparent;
+  border: none;
+  font-size: 21px;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.4;
+}
+
+.close:hover {
+  opacity: 1;
+}
+
+.modal label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+.modal input,
+.modal select {
+  margin: 0 0 15px 0;
+}
+
+.modal .item-row-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal .item-row-name {
+  flex-basis: 60%;
+}
+
+.modal .item-row-qty {
+  margin: 0 10px;
+  flex-basis: 15%;
+}
+
+.modal .item-row-price {
+  flex-basis: 25%;
+}
+
+/* PRINT VIEW MODAL */
+
+#printSection {
+  display: none;
+}
+.print-invoice-modal {
+  font-family: "Roboto";
+}
+.print-article {
+  margin: 0 auto;
+}
+.print-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.print-header h2 {
+  color: #900;
+  font-size: 2rem;
+}
+.business-logo img {
+  max-width: 180px;
+  margin-top: 0.83rem;
+}
+.business-info p {
+  margin: 0.4rem 0;
+}
+
+.print-body {
+  display: flex;
+  flex-direction: column;
+}
+.print-body h1 {
+  color: #900;
+  font-size: 4rem;
+  margin: 0;
+}
+.print-body h3 {
+  color: rgb(0, 48, 153);
+  font: 2rem;
+}
+
+.print-body-details {
+  display: flex;
+  justify-content: space-between;
+}
+.details-row h3 {
+  color: #000;
+  margin: 0.4rem 0;
+}
+.details-row p {
+  margin: 0.4rem 0;
+}
+.print-hr {
+  width: 100%;
+  margin: 20px 0;
+}
+.print-invoice-items {
+  text-align: left;
+}
+.print-invoice-items th {
+  color: rgb(0, 48, 153);
+  font-size: 1.17rem;
+  padding: 5px;
+}
+.print-invoice-items td {
+  padding: 3px 6px;
+}
+.table-last-child {
+  text-align: right;
+}
+.sum-totals p {
+  color: rgb(0, 48, 153);
+  text-align: right;
+}
+.sum-totals span {
+  color: #000;
+  font-weight: 700;
+  padding-left: 10px;
+}
+
+#total-sum,
+#total-sum span {
+  color: crimson;
+  font-size: 1.5rem;
+  margin: 0 0 01rem 0;
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+}
+.print-footer p {
+  text-align: center;
+  font-size: 0.75rem;
+  margin: 0.2rem;
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  #container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .table {
+    display: block;
+  }
+
+  .table-responsive {
+    padding: 0;
+  }
+
+  .modal-dialog {
+    left: 0%;
+    max-width: 600px;
+  }
+}
+
+/* PRINT VIEW */
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printSection,
+  #printSection * {
+    visibility: visible;
+  }
+  #printSection {
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 21cm;
+    height: 29.7cm;
+  }
+}

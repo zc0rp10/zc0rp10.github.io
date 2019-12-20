@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>CB Invoices</title>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <main id="container">
+      <div class="wrapper">
+        <header id="site-header">
+          <div class="header-top-row">
+            <h2>CARLIEN's <b>Invoices</b></h2>
+            <div class="header-btn-row">
+              <button
+                style="display: none"
+                class="btn btn-change"
+                type="button"
+                onclick="testFunction()"
+              >
+                Test
+              </button>
+              <button id="invoice-modal-btn" type="button" class="btn btn-add">
+                New Invoice
+              </button>
+            </div>
+          </div>
+          <div class="">
+            <label for="search-keyword"></label>
+            <input
+              type="text"
+              id="search-keyword"
+              class="form-control"
+              placeholder="Search by keyword"
+            />
+          </div>
+        </header>
+
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  <span class="custom-checkbox">
+                    <input type="checkbox" id="selectAll" />
+                    <label for="selectAll"></label>
+                  </span>
+                </th>
+                <th>Inv #</th>
+                <th>Date</th>
+                <th>Company</th>
+                <th>Amount</th>
+                <th>Payment Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="invoice-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- MODAL New Invoice -->
+
+    <section id="new-invoice-modal" class="modal">
+      <article class="modal-dialog">
+        <form id="new-invoice-form">
+          <header class="modal-header">
+            <h4 class="modal-title">Create Invoice</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              onclick="closeModal('new-invoice-modal')"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="modal-body" id="add-invoice-modal">
+            <div class="">
+              <label for="inputCompanySelector">Client</label>
+              <select class="form-control" id="inputCompanySelector" required>
+              </select>
+            </div>
+            <div class="">
+              <label for="inputProjectName">Project Name</label>
+              <input type="text" class="form-control" id="inputProjectName" />
+            </div>
+            <div class="">
+              <label for="inputInvoiceNote">Invoice Note</label>
+              <input type="text" class="form-control" id="inputInvoiceNote" />
+            </div>
+            <div class="item-row-group" id="item-row-1">
+              <div class="item-row-name">
+                <label for="inputItemName1">Item Name</label>
+                <input type="text" class="form-control" id="inputItemName1" />
+              </div>
+              <div class="item-row-qty">
+                <label for="inputItemQty1">Qty</label>
+                <input type="number" class="form-control" id="inputItemQty1" />
+              </div>
+              <div class="item-row-price">
+                <label for="inputItemPrice1">Unit Price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputItemPrice1"
+                />
+              </div>
+            </div>
+          </div>
+          <footer class="modal-footer">
+            <button id="add-btn" type="submit" class="btn btn-add">
+              Add
+            </button>
+            <button
+              id="add-item-btn"
+              type="button"
+              class="btn btn-change"
+              onclick="addItemRow()"
+            >
+              Add Item
+            </button>
+            <button
+              id="cancel-btn"
+              type="button"
+              class="btn btn-default"
+              onclick="closeModal('new-invoice-modal')"
+            >
+              Cancel
+            </button>
+          </footer>
+        </form>
+      </article>
+    </section>
+
+    <!-- MODAL Print View -->
+    <section id="printSection">
+      <article class="print-article">
+        <header class="print-header">
+          <div class="business-info">
+            <h2>Blic Media</h2>
+            <p>Carlien Bootsma</p>
+            <p>Hege Wier 26</p>
+            <p>8628EM Goenga</p>
+            <p>Tel: 06 344 74 260</p>
+          </div>
+          <div class="business-logo">
+            <img src="./assets/img/logo_invoice.png" alt="" />
+          </div>
+        </header>
+        <div class="print-body">
+          <h1>Factuur</h1>
+          <h3 id="invoice-date">Verzonden op 12/04/2019</h3>
+          <div class="print-body-details">
+            <div class="details-row">
+              <h3>Factuur voor</h3>
+              <p id="invoice-company-name">Company Name</p>
+              <p id="invoice-street-address">Street Address</p>
+              <p>
+                <span id="invoice-post-code">123 45</span>
+                <span id="invoice-city-name">Madeuptown</span>
+              </p>
+              <p id="invoice-country-name">Fantasyland</p>
+            </div>
+            <div class="details-row">
+              <h3>Projecten</h3>
+              <p id="invoice-project-name">Test Prod</p>
+            </div>
+            <div class="details-row">
+              <h3>Factuur #</h3>
+              <p id="invoice-number">435</p>
+              <br />
+              <h3>Betaaldatum</h3>
+              <p id="invoice-payment-date">12/05/2019</p>
+            </div>
+          </div>
+          <hr class="print-hr" />
+          <table class="print-invoice-items">
+            <thead>
+              <tr>
+                <th>Beschrijving</th>
+                <th>Aantal</th>
+                <th>Eenheid prijs</th>
+                <th class="table-last-child">Som</th>
+              </tr>
+            </thead>
+            <tbody id="invoice-items-table">
+              <tr>
+                <td>Item A</td>
+                <td>4</td>
+                <td>€200</td>
+                <td class="table-last-child">€200</td>
+              </tr>
+              <tr>
+                <td>Item B</td>
+                <td>5</td>
+                <td>€50</td>
+                <td class="table-last-child">€100</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr class="print-hr" />
+          <div class="sum-row">
+            <div class="notes">
+              <p id="invoice-note">Nota: You can leave a note here.</p>
+            </div>
+            <div class="sum-totals">
+              <p>Subtotaal: <span id="invoice-total-sum">€600</span></p>
+              <p>BTW (21%): <span id="invoice-tax-sum">€600</span></p>
+              <p id="total-sum">
+                Totaalbedrag: <span id="invoice-total-amount">€600</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr class="print-hr" />
+        <footer class="print-footer">
+          <p>
+            Gelieve het bovenstaande bedrag binnen 28 dagen na factuurdatum
+            overmaken op rekeningnummer.
+          </p>
+          <p>
+            NL11 INGB 0689 3278 97 ten name van C. Bootsma onder vermelding van
+            bovenstaand factuurnummer.
+          </p>
+        </footer>
+      </article>
+    </section>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js"></script>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
