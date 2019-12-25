@@ -75,7 +75,8 @@ td {
 }
 
 .delete-btn,
-.print-btn {
+.print-btn,
+.edit-btn {
   background: url(../icons/delete.png);
   border: none;
   height: 24px;
@@ -85,6 +86,10 @@ td {
 
 .print-btn {
   background: url(../icons/print.png);
+}
+
+.edit-btn {
+  background: url(../icons/edit.png);
 }
 
 .form-control {
@@ -139,13 +144,17 @@ td {
   border-color: #d9534f;
 }
 
-.btn-change {
+.btn-edit {
   color: #fff;
   background-color: #f1c026;
   border-color: #f1c026;
 }
 
 /* Modals */
+
+.text-warning {
+  color: #8a6d3b;
+}
 
 .modal {
   display: none;
@@ -163,6 +172,11 @@ td {
   position: absolute;
   top: 10%;
   left: 35%;
+}
+
+.modal-dialog-small {
+  max-width: 400px;
+  font-size: 13px;
 }
 
 .modal-header {
