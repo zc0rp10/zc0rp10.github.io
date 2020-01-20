@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>CB Invoices</title>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <main id="container">
+      <div class="wrapper">
+        <header id="site-header">
+          <div class="header-top-row">
+            <div class="header-logo-wrapper">
+            <img src="./assets/icons/invoices.svg" alt="" class="header-logo">
+            <h2>CARLIEN's <b>Invoices</b></h2>
+          </div>
+            <div>
+              <a id="dashboard-modal-btn" class="modal-action-btn">=</a>
+              <a id="invoices-modal-btn" class="modal-action-btn">+</a>
+              <a id="clients-modal-btn" class="modal-action-btn">+</a>
+            </div>
+          </div>
+          
+        </header>
+
+        <div id="content-responsive">
+         
+        </div>
+
+        <!-- BOTTOM NAV BAR -->
+
+        <nav id="bottom-nav-bar">
+          <div class="nav-wrapper-bottom">
+          <a href="#" class="nav-btn" id="dashboard-render-btn"> 
+            <img src="./assets/icons/dashboard.svg" alt="" class="nav-icon">
+            <p class="nav-icon-text">Dashboard</p>
+          </a>
+          <a href="#" class="nav-btn" id="invoice-render-btn">
+            <img src="./assets/icons/invoice.svg" alt="" class="nav-icon">
+            <p class="nav-icon-text">Invoices</p>
+          </a>
+          <a href="#" class="nav-btn" id="client-render-btn">
+            <img src="./assets/icons/clients.svg" alt="" class="nav-icon">
+            <p class="nav-icon-text">Clients</p>
+          </a>
+          <a href="#" class="nav-btn" id="logout-btn">
+            <img src="./assets/icons/tax.svg" alt="" class="nav-icon">
+            <p class="nav-icon-text">Taxes</p>
+          </a>
+        </nav>
+      </div>
+      </div>
+    </main>
+
+    <!-- MODAL Confirm Delete Invoice -->
+
+    <section id="delete-invoice-modal" class="modal">
+      <article class="modal-dialog modal-dialog-small">
+          <header class="modal-header">
+            <h4 class="modal-title">Delete Invoice</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              onclick="closeModal('delete-invoice-modal')"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="modal-body" id="delete-invoice-modal">
+            <p>Are you sure you want to delete this invoice?</p>
+            <small class="text-warning">This action cannot be undone.</small>
+            </div>
+          <footer class="modal-footer">
+            <button id="delete-invoice-btn" type="submit" class="btn btn-delete">
+              Delete
+            </button>
+            <button
+              id="cancel-btn"
+              type="button"
+              class="btn btn-default"
+              onclick="closeModal('delete-invoice-modal')"
+            >
+              Cancel
+            </button>
+          </footer>
+        
+      </article>
+    </section>
+
+    <!-- MODAL Confirm Delete Invoice -->
+
+    <section id="delete-client-modal" class="modal">
+      <article class="modal-dialog modal-dialog-small">
+          <header class="modal-header">
+            <h4 class="modal-title">Delete Client</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              onclick="closeModal('delete-client-modal')"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="modal-body" id="delete-client-modal">
+            <p>Are you sure you want to delete this client?</p>
+            <small class="text-warning">This action cannot be undone.</small>
+            </div>
+          <footer class="modal-footer">
+            <button id="delete-client-btn" type="submit" class="btn btn-delete">
+              Delete
+            </button>
+            <button
+              id="cancel-btn"
+              type="button"
+              class="btn btn-default"
+              onclick="closeModal('delete-client-modal')"
+            >
+              Cancel
+            </button>
+          </footer>
+        
+      </article>
+    </section>
+
+    <!-- MODAL New Client -->
+
+    <section id="new-client-modal" class="modal">
+      <article class="modal-dialog">
+        <form id="new-client-form">
+          <header class="modal-header">
+            <h4 class="modal-title">Create Client</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              onclick="closeModal('new-client-modal')"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="modal-body" id="add-client-modal">
+            <div class="">
+              <label for="inputCompanyName">Company Name</label>
+              <input type="text" class="form-control" id="inputCompanyName" />
+            </div>
+            <div class="">
+              <label for="inputStreetAddress">Street Address</label>
+              <input type="text" class="form-control" id="inputStreetAddress" />
+            </div>
+            <div class="">
+              <label for="inputPostCode">Post Code</label>
+              <input type="text" class="form-control" id="inputPostCode" />
+            </div>
+            <div class="">
+              <label for="inputCityName">City Name</label>
+              <input type="text" class="form-control" id="inputCityName" />
+            </div>
+            <div class="">
+              <label for="inputCountryName">Country</label>
+              <input type="text" class="form-control" id="inputCountryName" />
+            </div>
+            <div class="">
+              <label for="inputContactPerson">Contact Person</label>
+              <input type="text" class="form-control" id="inputContactPerson" />
+            </div>
+            <div class="">
+              <label for="inputEmailAddress">E-Mail</label>
+              <input type="email" class="form-control" id="inputEmailAddress" />
+            </div>
+            <div class="">
+              <label for="inputTelephoneNumber">Telephone Number</label>
+              <input type="text" class="form-control" id="inputTelephoneNumber" />
+            </div>
+           
+            </div>
+          </div>
+          <footer class="modal-footer">
+            <button id="create-client-btn" type="submit" class="btn btn-add">
+              Add Client
+            </button>
+            <button
+              id="cancel-btn"
+              type="button"
+              class="btn btn-default"
+              onclick="closeModal('new-client-modal')"
+            >
+              Cancel
+            </button>
+          </footer>
+        </form>
+      </article>
+    </section>
+
+    <!-- MODAL EditClient -->
+    <section id="edit-client-modal" class="modal">
+      <article class="modal-dialog">
+        <form id="edit-client-form">
+          <header class="modal-header">
+            <h4 class="modal-title">Edit Client</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              onclick="closeModal('edit-client-modal')"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="modal-body" id="add-client-modal">
+            <div class="">
+              <label for="inputEditCompanyName">Company Name</label>
+              <input type="text" class="form-control" id="inputEditCompanyName" />
+            </div>
+            <div class="">
+              <label for="inputEditStreetAddress">Street Address</label>
+              <input type="text" class="form-control" id="inputEditStreetAddress" />
+            </div>
+            <div class="">
+              <label for="inputEditPostCode">Post Code</label>
+              <input type="text" class="form-control" id="inputEditPostCode" />
+            </div>
+            <div class="">
+              <label for="inputEditCityName">City Name</label>
+              <input type="text" class="form-control" id="inputEditCityName" />
+            </div>
+            <div class="">
+              <label for="inputEditCountryName">Country</label>
+              <input type="text" class="form-control" id="inputEditCountryName" />
+            </div>
+            <div class="">
+              <label for="inputEditContactPerson">Contact Person</label>
+              <input type="text" class="form-control" id="inputEditContactPerson" />
+            </div>
+            <div class="">
+              <label for="inputEditEmailAddress">E-Mail</label>
+              <input type="email" class="form-control" id="inputEditEmailAddress" />
+            </div>
+            <div class="">
+              <label for="inputEditTelephoneNumber">Telephone Number</label>
+              <input type="text" class="form-control" id="inputEditTelephoneNumber" />
+            </div>
+           
+            </div>
+          </div>
+          <footer class="modal-footer">
+            <button id="edit-client-btn" type="submit" class="btn btn-add">
+              Update Client
+            </button>
+            <button
+              id="cancel-btn"
+              type="button"
+              class="btn btn-default"
+              onclick="closeModal('edit-client-modal')"
+            >
+              Cancel
+            </button>
+          </footer>
+        </form>
+      </article>
+    </section>
+
+    <!-- MODAL New Invoice -->
+
+    <section id="new-invoice-modal" class="modal">
+      <article class="modal-dialog">
+        <form id="new-invoice-form">
+          <header class="modal-header">
+            <h4 class="modal-title">Create Invoice</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              onclick="closeModal('new-invoice-modal')"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="modal-body" id="add-invoice-modal">
+            <div class="">
+              <label for="inputCompanySelector">Client</label>
+              <select class="form-control" id="inputCompanySelector" required>
+              </select>
+            </div>
+            <div class="">
+              <label for="inputProjectName">Project Name</label>
+              <input type="text" class="form-control" id="inputProjectName" />
+            </div>
+            <div class="">
+              <label for="inputInvoiceNote">Invoice Note</label>
+              <input type="text" class="form-control" id="inputInvoiceNote" />
+            </div>
+            <div class="item-row-group" id="item-row-1">
+              <div class="item-row-name">
+                <label for="inputItemName1">Item Name</label>
+                <input type="text" class="form-control" id="inputItemName1" />
+              </div>
+              <div class="item-row-qty">
+                <label for="inputItemQty1">Qty</label>
+                <input type="number" class="form-control" id="inputItemQty1" />
+              </div>
+              <div class="item-row-price">
+                <label for="inputItemPrice1">Unit Price</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputItemPrice1"
+                />
+              </div>
+            </div>
+          </div>
+          <footer class="modal-footer">
+            <button id="create-invoice-btn" type="submit" class="btn btn-add">
+              Create Invoice
+            </button>
+            <button
+              id="add-item-btn"
+              type="button"
+              class="btn btn-edit"
+              onclick="addItemRow()"
+            >
+              Add Item
+            </button>
+            <button
+              id="cancel-btn"
+              type="button"
+              class="btn btn-default"
+              onclick="closeModal('new-invoice-modal')"
+            >
+              Cancel
+            </button>
+          </footer>
+        </form>
+      </article>
+    </section>
+
+    <!-- SIGN IN / SIGN UP MODAL -->
+
+    <section id="modal-signup" class="modal"">
+      <article class="modal-dialog">
+        
+          <div class="modal-body">
+            
+            <form id="signup-form">
+            <h4>Sign Up</h4>
+            <div>
+              <label for="signup-email">Email Address</label>
+              <input
+                class="form-control"
+                type="email"
+                id="signup-email"
+                required
+              />
+            </div>
+            <div>
+              <label for="signup-password">Chose Password</label>
+              <input
+                class="form-control"
+                type="password"
+                id="signup-password"
+                required
+              />
+            </div>
+            <button class="btn btn-add">Sign Up</button>
+          </form>
+
+
+          <form id="signin-form">
+            <h4>Sign In</h4>
+            <div>
+              <label for="signin-email">Email Address</label>
+              <input
+                class="form-control"
+                type="email"
+                id="signin-email"
+                required
+              />
+            </div>
+            <div>
+              <label for="signin-password">Enter Password</label>
+              <input
+                class="form-control"
+                type="password"
+                id="signin-password"
+                required
+              />
+            </div>
+            <button class="btn btn-add">Sign In</button>
+          </form>
+         
+          
+        </div>
+       
+      </article>
+    </section>
+
+    <!-- MODAL Print View -->
+    <section id="printSection">
+      <article class="print-article">
+        <header class="print-header">
+          <div class="business-info">
+            <h2>Blic Media</h2>
+            <p>Carlien Bootsma</p>
+            <p>Hege Wier 26</p>
+            <p>8628EM Goenga</p>
+            <p>Tel: 06 344 74 260</p>
+          </div>
+          <div class="business-logo">
+            <img src="./assets/img/logo_invoice.png" alt="" />
+          </div>
+        </header>
+        <div class="print-body">
+          <h1>Factuur</h1>
+          <h3 id="invoice-date">Verzonden op 12/04/2019</h3>
+          <div class="print-body-details">
+            <div class="details-row">
+              <h3>Factuur voor</h3>
+              <p id="invoice-company-name">Company Name</p>
+              <p id="invoice-street-address">Street Address</p>
+              <p>
+                <span id="invoice-post-code">123 45</span>
+                <span id="invoice-city-name">Madeuptown</span>
+              </p>
+              <p id="invoice-country-name">Fantasyland</p>
+            </div>
+            <div class="details-row">
+              <h3>Projecten</h3>
+              <p id="invoice-project-name">Test Prod</p>
+            </div>
+            <div class="details-row">
+              <h3>Factuur #</h3>
+              <p id="invoice-number">435</p>
+              <br />
+              <h3>Betaaldatum</h3>
+              <p id="invoice-payment-date">12/05/2019</p>
+            </div>
+          </div>
+          <hr class="print-hr" />
+          <table class="print-invoice-items">
+            <thead>
+              <tr>
+                <th>Beschrijving</th>
+                <th>Aantal</th>
+                <th>Eenheid prijs</th>
+                <th class="table-last-child">Som</th>
+              </tr>
+            </thead>
+            <tbody id="invoice-items-table">
+              <tr>
+                <td>Item A</td>
+                <td>4</td>
+                <td>€200</td>
+                <td class="table-last-child">€200</td>
+              </tr>
+              <tr>
+                <td>Item B</td>
+                <td>5</td>
+                <td>€50</td>
+                <td class="table-last-child">€100</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr class="print-hr" />
+          <div class="sum-row">
+            <div class="notes">
+              <p id="invoice-note">Nota: You can leave a note here.</p>
+            </div>
+            <div class="sum-totals">
+              <p>Subtotaal: <span id="invoice-total-sum">€600</span></p>
+              <p>BTW (21%): <span id="invoice-tax-sum">€600</span></p>
+              <p id="total-sum">
+                Totaalbedrag: <span id="invoice-total-amount">€600</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr class="print-hr" />
+        <footer class="print-footer">
+          <p>
+            Gelieve het bovenstaande bedrag binnen 28 dagen na factuurdatum
+            overmaken op rekeningnummer.
+          </p>
+          <p>
+            NL11 INGB 0689 3278 97 ten name van C. Bootsma onder vermelding van
+            bovenstaand factuurnummer.
+          </p>
+        </footer>
+      </article>
+    </section>
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js"></script>
+
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+    apiKey: "AIzaSyBiEa4YLP-7E7lpoWGRK2jF1lX1fCd7PmY",
+    authDomain: "cb-invoices.firebaseapp.com",
+    databaseURL: "https://cb-invoices.firebaseio.com",
+    projectId: "cb-invoices",
+    storageBucket: "cb-invoices.appspot.com",
+    messagingSenderId: "934037469865",
+    appId: "1:934037469865:web:fdb572c2eb5e73e8df47b8",
+    measurementId: "G-FEJ51LQCKD"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    </script>
+
+    <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/auth.js"></script>
+  </body>
+</html>
