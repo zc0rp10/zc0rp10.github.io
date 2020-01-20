@@ -1,18 +1,30 @@
 //Listen for auth status
 auth.onAuthStateChanged(user => {
   if (user) {
-    $("logout-btn").style.display = "";
-    $("signin-btn").style.display = "none";
-    invoiceTable.style.display = "";
     db.collection("invoices")
       .where("createdBy", "==", auth.currentUser.uid)
       .onSnapshot(function() {
-        renderInvoices();
+        if (currentlyActiveModal === "invoiceModal") {
+          renderInvoices();
+        }
       });
+
+    db.collection("clients")
+      .where("createdBy", "==", auth.currentUser.uid)
+      .onSnapshot(function() {
+        if (currentlyActiveModal === "clientsModal") {
+          renderClients();
+        }
+      });
+
+    renderDashboard();
   } else {
-    $("signin-btn").style.display = "";
-    $("logout-btn").style.display = "none";
-    invoiceTable.style.display = "none";
+    $("content-responsive").innerHTML = "";
+    $("modal-signup").style.display = "block";
+    document.querySelectorAll(".modal-action-btn").forEach(btn => {
+      btn.style.display = "none";
+      currentlyActiveModal = null;
+    });
   }
 });
 
@@ -45,13 +57,11 @@ signupForm.addEventListener("submit", e => {
 const signinForm = document.querySelector("#signin-form");
 signinForm.addEventListener("submit", e => {
   e.preventDefault();
-
   const email = signinForm["signin-email"].value;
   const password = signinForm["signin-password"].value;
 
   auth.signInWithEmailAndPassword(email, password).then(cred => {
     $("modal-signup").style.display = "none";
-    renderInvoices();
     signinForm.reset();
   });
 });

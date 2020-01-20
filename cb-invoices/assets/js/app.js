@@ -1,16 +1,16 @@
+// Increment/Decrement varriables for adding/removing statistics
 const increment = firebase.firestore.FieldValue.increment(1);
 const decrement = firebase.firestore.FieldValue.increment(-1);
 
 // DOM Elements
 const $ = document.getElementById.bind(document);
-const addForm = $("add-invoice");
-const addBtn = $("add-btn");
-const newInvoiceBtn = $("invoice-modal-btn");
-const invoiceTable = $("invoice-table");
-const newInvoiceModal = $("new-invoice-modal");
+
+//Active Modal
+//Some functions only triggers when a specific modal is the one being displayed currently
+let currentlyActiveModal;
 
 //Open Client Modal
-$("client-modal-btn").addEventListener("click", () => {
+$("clients-modal-btn").addEventListener("click", () => {
   $("new-client-modal").style.display = "flex";
 });
 
@@ -18,8 +18,7 @@ $("client-modal-btn").addEventListener("click", () => {
 $("new-client-form").addEventListener("submit", e => {
   e.preventDefault();
   db.collection("clients")
-    .doc($("inputCompanyName").value)
-    .set({
+    .add({
       createdBy: auth.currentUser.uid,
       createdDate: firebase.firestore.Timestamp.fromDate(new Date()),
       companyName: $("inputCompanyName").value,
@@ -38,6 +37,60 @@ $("new-client-form").addEventListener("submit", e => {
     })
     .catch(function(error) {
       console.error("Error adding document: ", error);
+    });
+});
+
+//Open Edit Client Modal
+function editClient(docId) {
+  $("edit-client-modal").style.display = "flex";
+  db.collection("clients")
+    .doc(docId)
+    .get()
+    .then(function(doc) {
+      if (doc.exists) {
+        $("edit-client-btn").dataset.docid = doc.id;
+        $("inputEditCompanyName").value = doc.data().companyName;
+        $("inputEditStreetAddress").value = doc.data().companyStreetAddress;
+        $("inputEditPostCode").value = doc.data().companyPostCode;
+        $("inputEditCityName").value = doc.data().companyCityName;
+        $("inputEditCountryName").value = doc.data().companyCountryName;
+        $("inputEditContactPerson").value = doc.data().companyContactPerson;
+        $("inputEditEmailAddress").value = doc.data().companyEmailAddress;
+        $("inputEditTelephoneNumber").value = doc.data().companyTelephoneNumber;
+        console.log("Document data:", doc.data());
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    })
+    .catch(function(error) {
+      console.log("Error getting document:", error);
+    });
+}
+
+//Submit Client Edit on Update Button Click
+$("edit-client-btn").addEventListener("click", e => {
+  e.preventDefault();
+  db.collection("clients")
+    .doc(e.target.dataset.docid)
+    .set({
+      createdBy: auth.currentUser.uid,
+      editedDate: firebase.firestore.Timestamp.fromDate(new Date()),
+      companyName: $("inputEditCompanyName").value,
+      companyStreetAddress: $("inputEditStreetAddress").value,
+      companyPostCode: $("inputEditPostCode").value,
+      companyCityName: $("inputEditCityName").value,
+      companyCountryName: $("inputEditCountryName").value,
+      companyContactPerson: $("inputEditContactPerson").value,
+      companyEmailAddress: $("inputEditEmailAddress").value,
+      companyTelephoneNumber: $("inputEditTelephoneNumber").value
+    })
+    .then(function() {
+      closeModal("edit-client-modal");
+      $("edit-client-form").reset();
+    })
+    .catch(function(error) {
+      console.error("Error editing document: ", error);
     });
 });
 
@@ -66,7 +119,8 @@ function addItemRow() {
   $("add-invoice-modal").insertAdjacentHTML("beforeend", rowHTML);
 }
 
-addBtn.addEventListener("click", e => {
+//Create new invoice
+$("create-invoice-btn").addEventListener("click", e => {
   e.preventDefault();
   let localTotalSum = 0;
   let localTaxSum = 0;
@@ -74,6 +128,7 @@ addBtn.addEventListener("click", e => {
   function createArray() {
     let NoR = document.querySelectorAll(".item-row-group").length;
 
+    //Possible to replace with .map/.forEach instead of the loop?
     for (var i = 1; i <= NoR; i++) {
       object = {
         itemDescription: $("inputItemName" + i).value,
@@ -137,11 +192,14 @@ addBtn.addEventListener("click", e => {
             });
         });
     });
+  renderInvoices();
   closeModal("new-invoice-modal");
 });
 
 //Open Invoice Modals
-newInvoiceBtn.addEventListener("click", () => {
+$("invoices-modal-btn").addEventListener("click", e => {
+  e.preventDefault();
+  $("new-invoice-modal").style.display = "flex";
   modalBody = $("add-invoice-modal");
   modalBody.innerHTML = "";
   modalHTML = `<div class="">
@@ -176,8 +234,8 @@ newInvoiceBtn.addEventListener("click", () => {
   </div>
 </div>`;
   modalBody.insertAdjacentHTML("beforeend", modalHTML);
-  renderClients();
-  newInvoiceModal.style.display = "flex";
+  fillClientList();
+  $("new-invoice-modal").style.display = "flex";
 });
 
 //Delete Invoice
@@ -198,21 +256,26 @@ function showDeleteInvoiceModal(documentId) {
   });
 }
 
-function deleteInvoice(documentId) {
-  db.collection("invoices")
-    .doc(documentId)
-    .delete()
-    .then(function() {
-      console.log("Document successfully deleted!");
-    })
-    .catch(function(error) {
-      console.error("Error removing document: ", error);
-    });
+//Delete Client
+function showDeleteClientModal(documentId) {
+  $("delete-client-modal").style.display = "block";
+  $("delete-client-btn").addEventListener("click", e => {
+    e.preventDefault();
+    db.collection("clients")
+      .doc(documentId)
+      .delete()
+      .then(function() {
+        $("delete-client-modal").style.display = "none";
+      })
+      .catch(function(error) {
+        console.error("Error removing document: ", error);
+      });
+  });
 }
 
 //Edit Invoice
 function editInvoice() {
-  console.log("Not yet implemented");
+  alert("Not yet implemented");
 }
 
 //Render Invoice Modal
@@ -258,7 +321,7 @@ function testFunction() {
     });
 }
 
-renderInvoiceItems = function(documentId) {
+function renderInvoiceItems(documentId) {
   const invoiceItemTable = $("invoice-items-table");
   invoiceItemTable.innerHTML = "";
   db.collection("invoices")
@@ -275,32 +338,60 @@ renderInvoiceItems = function(documentId) {
         invoiceItemTable.insertAdjacentHTML("beforeend", invoiceItem);
       });
     });
-};
-
-//Open Modals
-newInvoiceBtn.addEventListener("click", () => {
-  newInvoiceModal.style.display = "flex";
-});
+}
 
 //Close Modals
 function closeModal(modal) {
   $(modal).style.display = "none";
 }
 
+//Render Dashboard
+$("dashboard-render-btn").addEventListener("click", () => {
+  currentlyActiveModal = "dashboardModal";
+  $("dashboard-modal-btn").style.display = "inline-block";
+  $("invoices-modal-btn").style.display = "none";
+  $("clients-modal-btn").style.display = "none";
+  renderDashboard();
+});
+
+function renderDashboard() {
+  $("dashboard-modal-btn").style.display = "inline-block";
+  $("content-responsive").innerHTML = `
+  <h2>Dashboard</h2>
+  `;
+}
+
 //Render Invoice Table
-renderInvoices = function() {
-  invoiceTable.innerHTML = "";
-  //db.collection('articles').where("status", "==", "published")
+$("invoice-render-btn").addEventListener("click", () => {
+  currentlyActiveModal = "invoiceModal";
+  $("dashboard-modal-btn").style.display = "none";
+  $("invoices-modal-btn").style.display = "inline-block";
+  $("clients-modal-btn").style.display = "none";
+  renderInvoices();
+});
+
+function renderInvoices() {
+  $("content-responsive").innerHTML = `
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Inv #</th>
+        <th>Date</th>
+        <th>Company</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="invoice-table"></tbody>
+  </table>`;
+
   db.collection("invoices")
     .where("createdBy", "==", auth.currentUser.uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
         let invoiceItem = `<tr>
-        <td><span class="custom-checkbox">
-        <input type="checkbox" id="selectAll" />
-        <label for="selectAll"></label>
-      </span></td>
         <td>${doc.data().invoiceNbr}</td>
         <td>${doc.data().invoiceDate}</td>
         <td>${doc.data().companyName}</td>
@@ -317,13 +408,60 @@ renderInvoices = function() {
           doc.id
         }')"></button></td>
         </tr>`;
-        invoiceTable.insertAdjacentHTML("beforeend", invoiceItem);
+        $("invoice-table").insertAdjacentHTML("beforeend", invoiceItem);
       });
     });
-};
+}
 
-//Render Client Options
-renderClients = function() {
+//Render Client Table
+$("client-render-btn").addEventListener("click", () => {
+  currentlyActiveModal = "clientsModal";
+  $("dashboard-modal-btn").style.display = "none";
+  $("invoices-modal-btn").style.display = "none";
+  $("clients-modal-btn").style.display = "inline-block";
+  renderClients();
+});
+
+function renderClients() {
+  $("content-responsive").innerHTML = `
+  <table class="table">
+    <thead>
+      <tr>
+      <th>Actions</th>
+      <th>Company Name</th>
+      <th class="table-last-child">Outstanding</th>
+      </tr>
+    </thead>
+    <tbody id="client-table"></tbody>
+  </table>`;
+
+  db.collection("clients")
+    .where("createdBy", "==", auth.currentUser.uid)
+    .get()
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        let invoiceItem = `<tr>
+        <td>
+        <button id="d${
+          doc.id
+        }" class="delete-btn grow" onclick="showDeleteClientModal('${
+          doc.id
+        }')"></button>
+        <button id="p${doc.id}" class="edit-btn grow" onclick="editClient('${
+          doc.id
+        }')"></button></td>
+        
+        <td>${doc.data().companyName}</td>
+        
+        <td class="table-last-child">€120</td>
+        </tr>`;
+        $("client-table").insertAdjacentHTML("beforeend", invoiceItem);
+      });
+    });
+}
+
+//Fill Clients Options for create invoice modal
+function fillClientList() {
   $("inputCompanySelector");
   const clientList = $("inputCompanySelector");
   clientList.innerHTML = "";
@@ -338,7 +476,7 @@ renderClients = function() {
         clientList.insertAdjacentHTML("beforeend", clientItem);
       });
     });
-};
+}
 
 //Print Invoice Modal
 function printInvoice(documentId) {
