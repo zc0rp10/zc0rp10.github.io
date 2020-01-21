@@ -427,6 +427,7 @@ td {
 @media print {
   body * {
     visibility: hidden;
+    height: 91.7vh;
   }
   #printSection,
   #printSection * {

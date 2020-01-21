@@ -231,7 +231,7 @@ $("create-invoice-btn").addEventListener("click", e => {
               invoiceNbr: localInvoiceNbr,
               invoiceDate: currentDate,
               invoicePaymentDate: paymentDate,
-              paymentStatus: "Unpaid",
+              paymentStatus: "unpaid",
               projectName: $("inputProjectName").value,
               invoiceNote: $("inputInvoiceNote").value,
               companyUniqueId: doc.id,
@@ -561,14 +561,34 @@ $("dashboard-render-btn").addEventListener("click", () => {
 
 //Render Dashboard View
 function renderDashboard() {
-  currentlyActiveModal = "dashboardModal";
-  $("dashboard-modal-btn").style.display = "inline-block";
-  $("invoices-modal-btn").style.display = "none";
-  $("clients-modal-btn").style.display = "none";
-  $("dashboard-modal-btn").style.display = "inline-block";
-  $("content-responsive").innerHTML = `
-  <h2>Dashboard</h2>
-  `;
+  //Reaches out to DB and fetches data on amounts invoiced and payed
+  db.collection("invoices")
+    .where("createdBy", "==", auth.currentUser.uid)
+    .get()
+    .then(function(querySnapshot) {
+      let totalInvoiced = 0;
+      let totalOutstanding = 0;
+      querySnapshot.forEach(function(doc) {
+        //Calculates the total sum for all invoices in the DB for this account
+        totalInvoiced = totalInvoiced + doc.data().totalSum;
+        //Calculates the total oustanding sum for all invoices in the DB for this account
+        if (doc.data().paymentStatus === "unpaid") {
+          totalOutstanding = totalOutstanding + doc.data().totalSum;
+        }
+      });
+
+      //Renders the HTML for the Dashboard
+      currentlyActiveModal = "dashboardModal";
+      $("dashboard-modal-btn").style.display = "inline-block";
+      $("invoices-modal-btn").style.display = "none";
+      $("clients-modal-btn").style.display = "none";
+      $("dashboard-modal-btn").style.display = "inline-block";
+      $("content-responsive").innerHTML = `
+      <h2>Dashboard</h2>
+      <p>Total Invoiced: <span id="total-invoice-amount">€ ${totalInvoiced}</span></p>
+      <p>Total Outstanding: <span id="total-invoice-amount">€ ${totalOutstanding}</span></p>
+      `;
+    });
 }
 
 //Event listner for Render Invoice function below.
@@ -602,12 +622,15 @@ function renderInvoices() {
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        let invoiceItem = `<tr>
+        //Renders the table
+        let invoiceItem = `<tr id="${doc.id}">
         <td>${doc.data().invoiceNbr}</td>
         <td>${doc.data().invoiceDate}</td>
         <td>${doc.data().companyName}</td>
         <td>€ ${doc.data().totalAmount}</td>
-        <td>${doc.data().paymentStatus}</td>
+        <td onclick="togglePaymentStatus('${doc.id}', '${
+          doc.data().paymentStatus
+        }')">${doc.data().paymentStatus}</td>
         <td><button  class="delete-btn grow" onclick="showDeleteInvoiceModal('${
           doc.id
         }')"></button><button  class="print-btn grow" onclick="printInvoice('${
@@ -619,7 +642,21 @@ function renderInvoices() {
         </tr>`;
         $("invoice-table").insertAdjacentHTML("beforeend", invoiceItem);
       });
+      //Toggels Payment Status
     });
+}
+
+function togglePaymentStatus(id, status) {
+  let invoiceRef = db.collection("invoices").doc(id);
+  if (status === "unpaid") {
+    return invoiceRef.update({
+      paymentStatus: "paid"
+    });
+  } else {
+    return invoiceRef.update({
+      paymentStatus: "unpaid"
+    });
+  }
 }
 
 //Event listner for Render Invoice function below.
