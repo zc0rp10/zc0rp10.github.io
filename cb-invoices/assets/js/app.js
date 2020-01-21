@@ -688,16 +688,9 @@ function renderClients() {
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
         let invoiceItem = `<tr>
-        <td>
-        <button class="delete-btn grow" onclick="showDeleteClientModal('${
-          doc.id
-        }')"></button>
-        <button class="edit-btn grow" onclick="editClient('${
-          doc.id
-        }')"></button></td>
-        
+        <button class="edit-btn grow" onclick="editClient('${doc.id}')"></button>
+        <td><button class="delete-btn grow" onclick="showDeleteClientModal('${doc.id}')"></button></td>
         <td>${doc.data().companyName}</td>
-        
         <td class="table-last-child">€120</td>
         </tr>`;
         $("client-table").insertAdjacentHTML("beforeend", invoiceItem);
