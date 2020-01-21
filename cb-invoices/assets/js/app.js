@@ -99,45 +99,61 @@ $("edit-client-btn").addEventListener("click", e => {
 function addItemRow(edit) {
   if (!edit) {
     let NoR = document.querySelectorAll(".item-row-group").length + 1;
-    let rowHTML = `<div class="item-row-group" id="item-row-${NoR}">
-  <div class="item-row-name">
-    <label for="inputItemName${NoR}">Item Name</label>
-    <input type="text" class="form-control" id="inputItemName${NoR}" />
-  </div>
-  <div class="item-row-qty">
-    <label for="inputItemQty${NoR}">Qty</label>
-    <input type="number" class="form-control" id="inputItemQty${NoR}" />
-  </div>
-  <div class="item-row-price">
-    <label for="inputItemPrice${NoR}">Unit Price</label>
-    <input
-      type="number"
-      class="form-control"
-      id="inputItemPrice${NoR}"
-    />
-  </div>
-</div>`;
+    let rowHTML = `
+    <div class="item-row-group" id="item-row-${NoR}">
+      <div class="item-row-name">
+        <label for="inputItemName${NoR}">Item Name</label>
+        <input type="text" class="form-control" id="inputItemName${NoR}" />
+      </div>
+      <div class="item-row-qty">
+        <label for="inputItemQty${NoR}">Qty</label>
+        <input type="number" class="form-control" id="inputItemQty${NoR}" />
+      </div>
+      <div class="item-row-price">
+        <label for="inputItemPrice${NoR}">Unit Price</label>
+        <input
+          type="number"
+          class="form-control"
+          id="inputItemPrice${NoR}"
+        />
+      </div>
+      <div class="item-row-tax">
+        <label for="inputItemTax${NoR}">Tax %</label>
+        <select class="form-control" id="inputItemTax${NoR}">
+          <option value="0.21">21%</option>
+          <option value="0">0%</option>
+         </select>
+      </div>
+    </div>`;
     $("add-invoice-modal").insertAdjacentHTML("beforeend", rowHTML);
   } else {
     let NoR = document.querySelectorAll(".edit-item-row-group").length + 1;
-    let rowHTML = `<div class="edit-item-row-group" id="edit-item-row-${NoR}">
-  <div class="edit-item-row-name">
-    <label for="inputEditItemName${NoR}">Item Name</label>
-    <input type="text" class="form-control" id="inputEditItemName${NoR}" />
-  </div>
-  <div class="edit-item-row-qty">
-    <label for="inputEditItemQty${NoR}">Qty</label>
-    <input type="number" class="form-control" id="inputEditItemQty${NoR}" />
-  </div>
-  <div class="edit-item-row-price">
-    <label for="inputEditItemPrice${NoR}">Unit Price</label>
-    <input
-      type="number"
-      class="form-control"
-      id="inputEditItemPrice${NoR}"
-    />
-  </div>
-</div>`;
+    let rowHTML = `
+    <div class="edit-item-row-group" id="edit-item-row-${NoR}">
+      <div class="edit-item-row-name">
+        <label for="inputEditItemName${NoR}">Item Name</label>
+        <input type="text" class="form-control" id="inputEditItemName${NoR}" />
+      </div>
+      <div class="edit-item-row-qty">
+        <label for="inputEditItemQty${NoR}">Qty</label>
+        <input type="number" class="form-control" id="inputEditItemQty${NoR}" />
+      </div>
+      <div class="edit-item-row-price">
+        <label for="inputEditItemPrice${NoR}">Unit Price</label>
+        <input
+          type="number"
+          class="form-control"
+          id="inputEditItemPrice${NoR}"
+        />
+      </div>
+        <div class="edit-item-row-tax">
+        <label for="inputEditItemTax${NoR}">Tax %</label>
+          <select class="form-control" id="inputEditItemTax${NoR}">
+            <option value="0.21">21%</option>
+            <option value="0">0%</option>
+          </select>
+      </div>
+    </div>`;
     $("update-invoice-modal").insertAdjacentHTML("beforeend", rowHTML);
   }
 }
@@ -160,6 +176,7 @@ $("invoices-modal-btn").addEventListener("click", () => {
     <label for="inputInvoiceNote">Invoice Note</label>
     <input type="text" class="form-control" id="inputInvoiceNote" />
   </div>
+
   <div class="item-row-group" id="item-row-1">
     <div class="item-row-name">
       <label for="inputItemName1">Item Name</label>
@@ -176,6 +193,13 @@ $("invoices-modal-btn").addEventListener("click", () => {
         class="form-control"
         id="inputItemPrice1"
       />
+    </div>
+    <div class="item-row-tax">
+    <label for="inputItemTax1">Tax %</label>
+    <select class="form-control" id="inputItemTax1">
+      <option value="0.21">21%</option>
+      <option value="0">0%</option>
+    </select>
     </div>
   </div>`;
   modalBody.insertAdjacentHTML("beforeend", modalHTML);
@@ -199,7 +223,9 @@ $("create-invoice-btn").addEventListener("click", e => {
         itemQty: $("inputItemQty" + i).value,
         itemPrice: $("inputItemPrice" + i).value,
         itemTax:
-          $("inputItemQty" + i).value * $("inputItemPrice" + i).value * 0.21,
+          $("inputItemQty" + i).value *
+          $("inputItemPrice" + i).value *
+          $("inputItemTax" + i).value,
         itemSum: $("inputItemQty" + i).value * $("inputItemPrice" + i).value
       };
       itemArray.push(object);
@@ -332,9 +358,16 @@ function editInvoice(uniqueInvoiceDocumentId) {
             <input
               type="number"
               class="form-control"
-              id="inputEditItemPrice${NoR++}"
+              id="inputEditItemPrice${NoR}"
               value="${item.itemPrice}"
             />
+          </div>
+          <div class="edit-item-row-tax">
+            <label for="inputEditItemTax${NoR}">Tax %</label>
+            <select class="form-control" id="inputEditItemTax${NoR++}">
+              <option value="0.21">21%</option>
+              <option value="0">0%</option>
+            </select>
           </div>
         </div>`;
           modalBody.insertAdjacentHTML("beforeend", invoiceItem);
@@ -356,7 +389,7 @@ function editInvoice(uniqueInvoiceDocumentId) {
               itemTax:
                 $("inputEditItemQty" + i).value *
                 $("inputEditItemPrice" + i).value *
-                0.21,
+                $("inputEditItemTax" + i).value,
               itemSum:
                 $("inputEditItemQty" + i).value *
                 $("inputEditItemPrice" + i++).value
@@ -542,6 +575,7 @@ function renderInvoiceItems(documentId) {
       <td>${val.itemDescription}</td>
       <td>${val.itemQty}</td>
       <td>€${val.itemPrice}</td>
+      <td>€${val.itemTax}</td>
       <td class="table-last-child">€${val.itemSum}</td>
       </tr>`;
         invoiceItemTable.insertAdjacentHTML("beforeend", invoiceItem);

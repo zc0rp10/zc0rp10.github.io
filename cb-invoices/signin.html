@@ -7,16 +7,17 @@
     <title>Document</title>
   </head>
   <body>
-      
+    <label for="inputEditItemTax1">Tax %</label>
+    <select class="form-control" id="inputEditItemTax1">
+      <option value="0.21">21%</option>
+      <option value="0">0%</option>
+    </select>
+
+    <script>
+      let taxOptions = [
+        "<option value='0.21'>21%</option>",
+        "<option value='0'>0%</option>"
+      ];
+    </script>
   </body>
-
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
-
-  <!-- TODO: Add SDKs for Firebase products that you want to use
- https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-firestore.js"></script>
-
-  <script src="./app.js"></script>
 </html>
