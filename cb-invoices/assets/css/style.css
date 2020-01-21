@@ -407,20 +407,20 @@ td {
 /* Desktop View  SCREENS LARGER THEN 600PX  */
 @media screen and (min-width: 600px) {
   .wrapper {
-    max-width: 1440px;
+    max-width: 600px;
     margin: 0 auto;
     height: 100vh;
   }
   .table {
-    max-width: 1440px;
+    max-width: 600px;
   }
 
   #site-header {
-    max-width: 1440px;
+    max-width: 600px;
   }
 
   #bottom-nav-bar {
-    max-width: 1440px;
+    max-width: 600px;
   }
 }
 /* PRINT VIEW */
