@@ -409,6 +409,7 @@ td {
   .wrapper {
     max-width: 1440px;
     margin: 0 auto;
+    height: 91.7vh;
   }
   .table {
     max-width: 1440px;
@@ -427,7 +428,6 @@ td {
 @media print {
   body * {
     visibility: hidden;
-    height: 91.7vh;
   }
   #printSection,
   #printSection * {
