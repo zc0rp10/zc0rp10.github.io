@@ -47,7 +47,7 @@ header h2 {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   display: grid;
   grid-template-rows: 0.75fr 8.25fr 1fr;
-  height: 100vh;
+  height: 91.7vh;
 }
 
 .table {
@@ -404,12 +404,12 @@ td {
   margin: 0.2rem;
 }
 
-/* Desktop View */
+/* Desktop View  SCREENS LARGER THEN 600PX  */
 @media screen and (min-width: 600px) {
   .wrapper {
     max-width: 1440px;
     margin: 0 auto;
-    height: 91.7vh;
+    height: 100vh;
   }
   .table {
     max-width: 1440px;
