@@ -38,19 +38,19 @@
 
         <nav id="bottom-nav-bar">
           <div class="nav-wrapper-bottom">
-          <a href="#" class="nav-btn" id="dashboard-render-btn"> 
+          <a class="nav-btn" id="dashboard-render-btn"> 
             <img src="./assets/icons/dashboard.svg" alt="" class="nav-icon">
             <p class="nav-icon-text">Dashboard</p>
           </a>
-          <a href="#" class="nav-btn" id="invoice-render-btn">
+          <a class="nav-btn" id="invoice-render-btn">
             <img src="./assets/icons/invoice.svg" alt="" class="nav-icon">
             <p class="nav-icon-text">Invoices</p>
           </a>
-          <a href="#" class="nav-btn" id="client-render-btn">
+          <a class="nav-btn" id="client-render-btn">
             <img src="./assets/icons/clients.svg" alt="" class="nav-icon">
             <p class="nav-icon-text">Clients</p>
           </a>
-          <a href="#" class="nav-btn" id="logout-btn">
+          <a class="nav-btn" id="logout-btn">
             <img src="./assets/icons/tax.svg" alt="" class="nav-icon">
             <p class="nav-icon-text">Taxes</p>
           </a>
@@ -96,7 +96,7 @@
       </article>
     </section>
 
-    <!-- MODAL Confirm Delete Invoice -->
+    <!-- MODAL Confirm Delete Client -->
 
     <section id="delete-client-modal" class="modal">
       <article class="modal-dialog modal-dialog-small">
@@ -203,7 +203,7 @@
       </article>
     </section>
 
-    <!-- MODAL EditClient -->
+    <!-- MODAL Edit Client -->
     <section id="edit-client-modal" class="modal">
       <article class="modal-dialog">
         <form id="edit-client-form">
@@ -219,7 +219,7 @@
               &times;
             </button>
           </header>
-          <div class="modal-body" id="add-client-modal">
+          <div class="modal-body" id="edit-client-modal">
             <div class="">
               <label for="inputEditCompanyName">Company Name</label>
               <input type="text" class="form-control" id="inputEditCompanyName" />
@@ -290,37 +290,7 @@
             </button>
           </header>
           <div class="modal-body" id="add-invoice-modal">
-            <div class="">
-              <label for="inputCompanySelector">Client</label>
-              <select class="form-control" id="inputCompanySelector" required>
-              </select>
-            </div>
-            <div class="">
-              <label for="inputProjectName">Project Name</label>
-              <input type="text" class="form-control" id="inputProjectName" />
-            </div>
-            <div class="">
-              <label for="inputInvoiceNote">Invoice Note</label>
-              <input type="text" class="form-control" id="inputInvoiceNote" />
-            </div>
-            <div class="item-row-group" id="item-row-1">
-              <div class="item-row-name">
-                <label for="inputItemName1">Item Name</label>
-                <input type="text" class="form-control" id="inputItemName1" />
-              </div>
-              <div class="item-row-qty">
-                <label for="inputItemQty1">Qty</label>
-                <input type="number" class="form-control" id="inputItemQty1" />
-              </div>
-              <div class="item-row-price">
-                <label for="inputItemPrice1">Unit Price</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="inputItemPrice1"
-                />
-              </div>
-            </div>
+            <!-- THIS SECTION INSERTED WITH JS WHEN CREATE INVOICE IS CLICKED -->
           </div>
           <footer class="modal-footer">
             <button id="create-invoice-btn" type="submit" class="btn btn-add">
@@ -342,6 +312,33 @@
             >
               Cancel
             </button>
+          </footer>
+        </form>
+      </article>
+    </section>
+
+     <!-- MODAL Edit Invoice -->
+
+     <section id="edit-invoice-modal" class="modal">
+      <article class="modal-dialog">
+        <form id="edit-invoice-form">
+          <header class="modal-header">
+            <h4 class="modal-title">Edit Invoice</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-hidden="true"
+              onclick="closeModal('edit-invoice-modal')"
+            >
+              &times;
+            </button>
+          </header>
+          <div class="modal-body" id="update-invoice-modal">
+            <!-- THIS SECTION INSERTED WITH JS WHEN CREATE INVOICE IS CLICKED -->
+            </div>
+          <footer class="modal-footer" id="update-invoice-footer">
+            <!--Added With JS-->
           </footer>
         </form>
       </article>

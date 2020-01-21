@@ -9,12 +9,12 @@ const $ = document.getElementById.bind(document);
 //Some functions only triggers when a specific modal is the one being displayed currently
 let currentlyActiveModal;
 
-//Open Client Modal
+//Open Add Client Modal
 $("clients-modal-btn").addEventListener("click", () => {
   $("new-client-modal").style.display = "flex";
 });
 
-//Add Client Modal
+//Add Client Modal Submit
 $("new-client-form").addEventListener("submit", e => {
   e.preventDefault();
   db.collection("clients")
@@ -68,7 +68,7 @@ function editClient(docId) {
     });
 }
 
-//Submit Client Edit on Update Button Click
+//Edit Client Modal Submit
 $("edit-client-btn").addEventListener("click", e => {
   e.preventDefault();
   db.collection("clients")
@@ -94,11 +94,12 @@ $("edit-client-btn").addEventListener("click", e => {
     });
 });
 
-//Add Invoice Modal
+//Add Invoice Modal Functions below
 //Adds item row in modal
-function addItemRow() {
-  let NoR = document.querySelectorAll(".item-row-group").length + 1;
-  let rowHTML = `<div class="item-row-group" id="item-row-${NoR}">
+function addItemRow(edit) {
+  if (!edit) {
+    let NoR = document.querySelectorAll(".item-row-group").length + 1;
+    let rowHTML = `<div class="item-row-group" id="item-row-${NoR}">
   <div class="item-row-name">
     <label for="inputItemName${NoR}">Item Name</label>
     <input type="text" class="form-control" id="inputItemName${NoR}" />
@@ -116,10 +117,73 @@ function addItemRow() {
     />
   </div>
 </div>`;
-  $("add-invoice-modal").insertAdjacentHTML("beforeend", rowHTML);
+    $("add-invoice-modal").insertAdjacentHTML("beforeend", rowHTML);
+  } else {
+    let NoR = document.querySelectorAll(".edit-item-row-group").length + 1;
+    let rowHTML = `<div class="edit-item-row-group" id="edit-item-row-${NoR}">
+  <div class="edit-item-row-name">
+    <label for="inputEditItemName${NoR}">Item Name</label>
+    <input type="text" class="form-control" id="inputEditItemName${NoR}" />
+  </div>
+  <div class="edit-item-row-qty">
+    <label for="inputEditItemQty${NoR}">Qty</label>
+    <input type="number" class="form-control" id="inputEditItemQty${NoR}" />
+  </div>
+  <div class="edit-item-row-price">
+    <label for="inputEditItemPrice${NoR}">Unit Price</label>
+    <input
+      type="number"
+      class="form-control"
+      id="inputEditItemPrice${NoR}"
+    />
+  </div>
+</div>`;
+    $("update-invoice-modal").insertAdjacentHTML("beforeend", rowHTML);
+  }
 }
 
-//Create new invoice
+//Open Add Invoice Modal
+$("invoices-modal-btn").addEventListener("click", () => {
+  modalBody = $("add-invoice-modal");
+  modalBody.innerHTML = "";
+  modalHTML = `
+  <div class="">
+    <label for="inputCompanySelector">Client</label>
+    <select class="form-control" id="inputCompanySelector" required>
+    </select>
+  </div>
+  <div class="">
+    <label for="inputProjectName">Project Name</label>
+    <input type="text" class="form-control" id="inputProjectName" />
+  </div>
+  <div class="">
+    <label for="inputInvoiceNote">Invoice Note</label>
+    <input type="text" class="form-control" id="inputInvoiceNote" />
+  </div>
+  <div class="item-row-group" id="item-row-1">
+    <div class="item-row-name">
+      <label for="inputItemName1">Item Name</label>
+      <input type="text" class="form-control" id="inputItemName1" />
+    </div>
+    <div class="item-row-qty">
+      <label for="inputItemQty1">Qty</label>
+      <input type="number" class="form-control" id="inputItemQty1" />
+    </div>
+    <div class="item-row-price">
+      <label for="inputItemPrice1">Unit Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="inputItemPrice1"
+      />
+    </div>
+  </div>`;
+  modalBody.insertAdjacentHTML("beforeend", modalHTML);
+  fillClientList();
+  $("new-invoice-modal").style.display = "flex";
+});
+
+//Add Invoice Modal Submit
 $("create-invoice-btn").addEventListener("click", e => {
   e.preventDefault();
   let localTotalSum = 0;
@@ -170,6 +234,7 @@ $("create-invoice-btn").addEventListener("click", e => {
               paymentStatus: "Unpaid",
               projectName: $("inputProjectName").value,
               invoiceNote: $("inputInvoiceNote").value,
+              companyUniqueId: doc.id,
               companyName: doc.data().companyName,
               companyStreetAddress: doc.data().companyStreetAddress,
               companyPostCode: doc.data().companyPostCode,
@@ -196,49 +261,209 @@ $("create-invoice-btn").addEventListener("click", e => {
   closeModal("new-invoice-modal");
 });
 
-//Open Invoice Modals
-$("invoices-modal-btn").addEventListener("click", e => {
-  e.preventDefault();
-  $("new-invoice-modal").style.display = "flex";
-  modalBody = $("add-invoice-modal");
-  modalBody.innerHTML = "";
-  modalHTML = `<div class="">
-  <label for="inputCompanySelector">Client</label>
-  <select class="form-control" id="inputCompanySelector" required>
-  </select>
-</div>
-<div class="">
-  <label for="inputProjectName">Project Name</label>
-  <input type="text" class="form-control" id="inputProjectName" />
-</div>
-<div class="">
-  <label for="inputInvoiceNote">Invoice Note</label>
-  <input type="text" class="form-control" id="inputInvoiceNote" />
-</div>
-<div class="item-row-group" id="item-row-1">
-  <div class="item-row-name">
-    <label for="inputItemName1">Item Name</label>
-    <input type="text" class="form-control" id="inputItemName1" />
-  </div>
-  <div class="item-row-qty">
-    <label for="inputItemQty1">Qty</label>
-    <input type="number" class="form-control" id="inputItemQty1" />
-  </div>
-  <div class="item-row-price">
-    <label for="inputItemPrice1">Unit Price</label>
-    <input
-      type="number"
-      class="form-control"
-      id="inputItemPrice1"
-    />
-  </div>
-</div>`;
-  modalBody.insertAdjacentHTML("beforeend", modalHTML);
-  fillClientList();
-  $("new-invoice-modal").style.display = "flex";
-});
+//Open Edit Invoice Modal
+function editInvoice(uniqueInvoiceDocumentId) {
+  //Gets the existing invoice that should be edited
+  db.collection("invoices")
+    .doc(uniqueInvoiceDocumentId)
+    .get()
+    .then(function(invoiceObject) {
+      if (invoiceObject.exists) {
+        console.log("Invoice Requested: " + invoiceObject.id);
+        //Then Renders the skeleteon for the modal and displays it
+        $("edit-invoice-modal").style.display = "flex";
+        modalBody = $("update-invoice-modal");
+        modalBody.innerHTML = "";
+        modalHTML = `
+        <div class="">
+          <label for="inputEditCompanySelector">Client</label>
+          <select class="form-control" id="inputEditCompanySelector" required>
+          </select>
+        </div>
+        <div class="">
+          <label for="inputEditProjectName">Project Name</label>
+          <input type="text" class="form-control" id="inputEditProjectName" />
+        </div>
+        <div class="">
+          <label for="inputEditInvoiceNote">Invoice Note</label>
+          <input type="text" class="form-control" id="inputEditInvoiceNote" />
+        </div>`;
+        modalBody.insertAdjacentHTML("beforeend", modalHTML);
 
-//Delete Invoice
+        //Had a problem where evenlistners would stack on the update confirm button
+        //Lead to mutiple invoices being overwritten when making changes a secon, third etc. time.
+        //Always creating the button on modal open removed that issue
+        //TODO: Really no reason to create body and footer sepperatly, can be combined, create whole modal on open.
+        //Alt TODO: Just create the button on open instead of whole footer.
+        modalFooter = $("update-invoice-footer");
+        modalFooter.innerHTML = "";
+        modalFooterHTML = `
+        <button id="update-invoice-btn" type="submit" class="btn btn-add">Update Invoice</button>
+        <button id="add-item-btn" type="button" class="btn btn-edit" onclick="addItemRow('edit')">Add Item</button>
+        <button id="cancel-btn" type="button" class="btn btn-default" onclick="closeModal('edit-invoice-modal')">Cancel</button>
+        `;
+        modalFooter.insertAdjacentHTML("beforeend", modalFooterHTML);
+
+        //Fills the client list with options, fillCLientList() runs over all the clients looking for an id that maches the creator id in this invoice
+        const originalClient = invoiceObject.data().companyUniqueId;
+        fillClientList("Edit", originalClient);
+        console.log(originalClient);
+
+        $("inputEditProjectName").value = invoiceObject.data().projectName;
+        $("inputEditInvoiceNote").value = invoiceObject.data().invoiceNote;
+        //Goes over each invoice item in the array and adds a row with detils
+        let NoR = 1;
+        invoiceObject.data().invoiceItems.map(item => {
+          let invoiceItem = `<div class="edit-item-row-group" id="edit-item-row-${NoR}">
+          <div class="edit-item-row-name">
+            <label for="inputEditItemName${NoR}">Item Name</label>
+            <input type="text" class="form-control" id="inputEditItemName${NoR}" value="${
+            item.itemDescription
+          }" />
+          </div>
+          <div class="edit-item-row-qty">
+            <label for="inputEditItemQty${NoR}">Qty</label>
+            <input type="number" class="form-control" id="inputEditItemQty${NoR}" value="${
+            item.itemQty
+          }"/>
+          </div>
+          <div class="edit-item-row-price">
+            <label for="inputEditItemPrice${NoR}">Unit Price</label>
+            <input
+              type="number"
+              class="form-control"
+              id="inputEditItemPrice${NoR++}"
+              value="${item.itemPrice}"
+            />
+          </div>
+        </div>`;
+          modalBody.insertAdjacentHTML("beforeend", invoiceItem);
+        });
+
+        //Listening for confirmation to update
+        //Listens for the Update Btn Click and starts the invoice update process
+        function submitEditedInvoice(e) {
+          e.preventDefault();
+          let localTotalSum = 0;
+          let localTaxSum = 0;
+          let itemArray = [];
+          let i = 1;
+          document.querySelectorAll(".edit-item-row-group").forEach(item => {
+            object = {
+              itemDescription: $("inputEditItemName" + i).value,
+              itemQty: $("inputEditItemQty" + i).value,
+              itemPrice: $("inputEditItemPrice" + i).value,
+              itemTax:
+                $("inputEditItemQty" + i).value *
+                $("inputEditItemPrice" + i).value *
+                0.21,
+              itemSum:
+                $("inputEditItemQty" + i).value *
+                $("inputEditItemPrice" + i++).value
+            };
+            itemArray.push(object);
+            localTotalSum = localTotalSum + object.itemSum;
+            localTaxSum = localTaxSum + object.itemTax;
+          });
+
+          const newCLient = $("inputEditCompanySelector").value;
+          if (originalClient === newCLient) {
+            //Runs if they keep the same client, saves a call to DB to get client info
+            return db
+              .collection("invoices")
+              .doc(invoiceObject.id)
+              .update({
+                projectName: $("inputEditProjectName").value,
+                invoiceNote: $("inputEditInvoiceNote").value,
+                totalSum: Math.round(localTotalSum),
+                totalTax: Math.round(localTaxSum),
+                totalAmount: Math.round(localTotalSum + localTaxSum),
+                invoiceItems: itemArray
+              })
+              .then(function() {
+                console.log("Invoice Update: " + invoiceObject.id);
+                $("edit-invoice-modal").style.display = "none";
+              })
+              .catch(function(error) {
+                console.error("Error writing document: ", error);
+              });
+          } else {
+            //Runs if there is a new client selected
+            db.collection("clients")
+              .doc(newCLient)
+              .get()
+              .then(function(newClientDoc) {
+                return db
+                  .collection("invoices")
+                  .doc(invoiceObject.id)
+                  .update({
+                    projectName: $("inputEditProjectName").value,
+                    invoiceNote: $("inputEditInvoiceNote").value,
+
+                    companyUniqueId: newClientDoc.id,
+                    companyName: newClientDoc.data().companyName,
+                    companyStreetAddress: newClientDoc.data()
+                      .companyStreetAddress,
+                    companyPostCode: newClientDoc.data().companyPostCode,
+                    companyCityName: newClientDoc.data().companyCityName,
+                    companyCountryName: newClientDoc.data().companyCountryName,
+
+                    totalSum: Math.round(localTotalSum),
+                    totalTax: Math.round(localTaxSum),
+                    totalAmount: Math.round(localTotalSum + localTaxSum),
+                    invoiceItems: itemArray
+                  })
+                  .then(function() {
+                    console.log("Invoice Update: " + invoiceObject.id);
+                    $("edit-invoice-modal").style.display = "none";
+                  })
+                  .catch(function(error) {
+                    console.error("Error writing document: ", error);
+                  });
+              })
+              .catch(function(error) {
+                console.log("Error getting document:", error);
+              });
+          }
+
+          return db
+            .collection("invoices")
+            .doc(invoiceObject.id)
+            .update({
+              projectName: $("inputEditProjectName").value,
+              invoiceNote: $("inputEditInvoiceNote").value,
+
+              // companyUniqueId: doc.id,
+              // companyName: doc.data().companyName,
+              // companyStreetAddress: doc.data().companyStreetAddress,
+              // companyPostCode: doc.data().companyPostCode,
+              // companyCityName: doc.data().companyCityName,
+              // companyCountryName: doc.data().companyCountryName,
+
+              totalSum: Math.round(localTotalSum),
+              totalTax: Math.round(localTaxSum),
+              totalAmount: Math.round(localTotalSum + localTaxSum),
+              invoiceItems: itemArray
+            })
+            .then(function() {
+              console.log("Invoice Update: " + invoiceObject.id);
+              $("edit-invoice-modal").style.display = "none";
+            })
+            .catch(function(error) {
+              console.error("Error writing document: ", error);
+            });
+        }
+        $("update-invoice-btn").addEventListener("click", submitEditedInvoice);
+      } else {
+        console.log("No such invoice!");
+      }
+    })
+    .catch(function(error) {
+      console.log("Error getting invoice:", error);
+    });
+}
+
+//Open Delete Invoice Modal + Listen for Submit
 function showDeleteInvoiceModal(documentId) {
   $("delete-invoice-modal").style.display = "block";
   $("delete-invoice-btn").addEventListener("click", e => {
@@ -256,7 +481,7 @@ function showDeleteInvoiceModal(documentId) {
   });
 }
 
-//Delete Client
+//Open Delete Client Modal + Listen for Submit
 function showDeleteClientModal(documentId) {
   $("delete-client-modal").style.display = "block";
   $("delete-client-btn").addEventListener("click", e => {
@@ -273,12 +498,7 @@ function showDeleteClientModal(documentId) {
   });
 }
 
-//Edit Invoice
-function editInvoice() {
-  alert("Not yet implemented");
-}
-
-//Render Invoice Modal
+//Render Invoice Print Modal
 function renderInvoice(documentId) {
   let docRef = db.collection("invoices").doc(documentId);
   docRef
@@ -309,18 +529,7 @@ function renderInvoice(documentId) {
     });
 }
 
-//Render Items for Invoice Modal Table
-function testFunction() {
-  db.collection("invoices")
-    .doc("MVjoCmk8Iz2qbJ8PV087")
-    .get()
-    .then(function(doc) {
-      doc.data().invoiceItems.forEach(val => {
-        console.log(val);
-      });
-    });
-}
-
+//Render Items for Print Invoice Modal Table
 function renderInvoiceItems(documentId) {
   const invoiceItemTable = $("invoice-items-table");
   invoiceItemTable.innerHTML = "";
@@ -328,7 +537,7 @@ function renderInvoiceItems(documentId) {
     .doc(documentId)
     .get()
     .then(function(doc) {
-      doc.data().invoiceItems.forEach(val => {
+      doc.data().invoiceItems.map(val => {
         let invoiceItem = `<tr>
       <td>${val.itemDescription}</td>
       <td>${val.itemQty}</td>
@@ -340,28 +549,29 @@ function renderInvoiceItems(documentId) {
     });
 }
 
-//Close Modals
+//Close function for all Modals
 function closeModal(modal) {
   $(modal).style.display = "none";
 }
 
-//Render Dashboard
+//Event listner for Render Dashboard function below, if it's triggered from taskbar button rather then iniated by login from auth.js
 $("dashboard-render-btn").addEventListener("click", () => {
+  renderDashboard();
+});
+
+//Render Dashboard View
+function renderDashboard() {
   currentlyActiveModal = "dashboardModal";
   $("dashboard-modal-btn").style.display = "inline-block";
   $("invoices-modal-btn").style.display = "none";
   $("clients-modal-btn").style.display = "none";
-  renderDashboard();
-});
-
-function renderDashboard() {
   $("dashboard-modal-btn").style.display = "inline-block";
   $("content-responsive").innerHTML = `
   <h2>Dashboard</h2>
   `;
 }
 
-//Render Invoice Table
+//Event listner for Render Invoice function below.
 $("invoice-render-btn").addEventListener("click", () => {
   currentlyActiveModal = "invoiceModal";
   $("dashboard-modal-btn").style.display = "none";
@@ -370,6 +580,7 @@ $("invoice-render-btn").addEventListener("click", () => {
   renderInvoices();
 });
 
+//Renders the Invoice Table View
 function renderInvoices() {
   $("content-responsive").innerHTML = `
   <table class="table">
@@ -397,14 +608,12 @@ function renderInvoices() {
         <td>${doc.data().companyName}</td>
         <td>€ ${doc.data().totalAmount}</td>
         <td>${doc.data().paymentStatus}</td>
-        <td><button id="d${
+        <td><button  class="delete-btn grow" onclick="showDeleteInvoiceModal('${
           doc.id
-        }" class="delete-btn grow" onclick="showDeleteInvoiceModal('${
+        }')"></button><button  class="print-btn grow" onclick="printInvoice('${
           doc.id
-        }')"></button><button id="p${
-          doc.id
-        }" class="print-btn grow" onclick="printInvoice('${doc.id}')"></button>
-        <button id="p${doc.id}" class="edit-btn grow" onclick="editInvoice('${
+        }')"></button>
+        <button  class="edit-btn grow" onclick="editInvoice('${
           doc.id
         }')"></button></td>
         </tr>`;
@@ -413,7 +622,7 @@ function renderInvoices() {
     });
 }
 
-//Render Client Table
+//Event listner for Render Invoice function below.
 $("client-render-btn").addEventListener("click", () => {
   currentlyActiveModal = "clientsModal";
   $("dashboard-modal-btn").style.display = "none";
@@ -422,6 +631,7 @@ $("client-render-btn").addEventListener("click", () => {
   renderClients();
 });
 
+//Renders the Client Table View
 function renderClients() {
   $("content-responsive").innerHTML = `
   <table class="table">
@@ -442,12 +652,10 @@ function renderClients() {
       querySnapshot.forEach(doc => {
         let invoiceItem = `<tr>
         <td>
-        <button id="d${
-          doc.id
-        }" class="delete-btn grow" onclick="showDeleteClientModal('${
+        <button class="delete-btn grow" onclick="showDeleteClientModal('${
           doc.id
         }')"></button>
-        <button id="p${doc.id}" class="edit-btn grow" onclick="editClient('${
+        <button class="edit-btn grow" onclick="editClient('${
           doc.id
         }')"></button></td>
         
@@ -460,20 +668,26 @@ function renderClients() {
     });
 }
 
-//Fill Clients Options for create invoice modal
-function fillClientList() {
-  $("inputCompanySelector");
-  const clientList = $("inputCompanySelector");
+//Fills the drop down with Client Options for create and edit invoice modal
+function fillClientList(x = "", originalClientId = "") {
+  const clientList = $(`input${x}CompanySelector`);
   clientList.innerHTML = "";
   db.collection("clients")
     .where("createdBy", "==", auth.currentUser.uid)
     .get()
     .then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        let clientItem = `<option value="${doc.id}">${
-          doc.data().companyName
-        }</option>`;
-        clientList.insertAdjacentHTML("beforeend", clientItem);
+        if (originalClientId == doc.id) {
+          let clientItem = `<option selected value="${doc.id}">${
+            doc.data().companyName
+          }</option>`;
+          clientList.insertAdjacentHTML("beforeend", clientItem);
+        } else {
+          let clientItem = `<option value="${doc.id}">${
+            doc.data().companyName
+          }</option>`;
+          clientList.insertAdjacentHTML("beforeend", clientItem);
+        }
       });
     });
 }
