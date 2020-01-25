@@ -234,11 +234,8 @@ $("create-invoice-btn").addEventListener("click", e => {
     }
   }
   createArray();
-
-  let date = new Date();
-  let currentDate = date.toISOString().slice(0, 10);
-  date.setDate(date.getDate() + 30);
-  let paymentDate = date.toISOString().slice(0, 10);
+  let paymentDate = new Date();
+  paymentDate.setDate(paymentDate.getDate() + 28);
   //Gets Current Invoice Number
   db.collection("users")
     .doc(auth.currentUser.uid)
@@ -255,7 +252,7 @@ $("create-invoice-btn").addEventListener("click", e => {
             .add({
               createdBy: auth.currentUser.uid,
               invoiceNbr: localInvoiceNbr,
-              invoiceDate: currentDate,
+              invoiceDate: new Date(),
               invoicePaymentDate: paymentDate,
               paymentStatus: "unpaid",
               projectName: $("inputProjectName").value,
@@ -545,8 +542,18 @@ function renderInvoice(documentId) {
         $("invoice-country-name").innerText = doc.data().companyCountryName;
         $("invoice-project-name").innerText = doc.data().projectName;
         $("invoice-number").innerText = doc.data().invoiceNbr;
-        $("invoice-date").innerText = "Verzonden op " + doc.data().invoiceDate;
-        $("invoice-payment-date").innerText = doc.data().invoicePaymentDate;
+        $("invoice-date").innerText =
+          "Verzonden op " +
+          doc
+            .data()
+            .invoiceDate.toDate()
+            .toISOString()
+            .slice(0, 10);
+        $("invoice-payment-date").innerText = doc
+          .data()
+          .invoicePaymentDate.toDate()
+          .toISOString()
+          .slice(0, 10);
         $("invoice-note").innerText = "Nota: " + doc.data().invoiceNote;
         $("invoice-total-sum").innerText = "€" + doc.data().totalSum;
         $("invoice-tax-sum").innerText = "€" + doc.data().totalTax;
@@ -595,33 +602,134 @@ $("dashboard-render-btn").addEventListener("click", () => {
 
 //Render Dashboard View
 function renderDashboard() {
+  //Renders Dashboard Table
+  $("content-responsive").innerHTML = `
+      <table class="table table-dashboard">
+      
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Invoiced</th>
+            <th>Outstanding</th>
+          </tr>
+        </thead>
+        <tbody id="dashboard-table"></tbody>
+        </table>`;
+
   //Reaches out to DB and fetches data on amounts invoiced and payed
   db.collection("invoices")
     .where("createdBy", "==", auth.currentUser.uid)
     .get()
     .then(function(querySnapshot) {
-      let totalInvoiced = 0;
-      let totalOutstanding = 0;
+      let invoiced = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0,
+        10: 0,
+        11: 0
+      };
+      let outstanding = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0,
+        10: 0,
+        11: 0
+      };
+
+      //Grabs data and sorts it based on paymen status and month
       querySnapshot.forEach(function(doc) {
-        //Calculates the total sum for all invoices in the DB for this account
-        totalInvoiced = totalInvoiced + doc.data().totalSum;
-        //Calculates the total oustanding sum for all invoices in the DB for this account
+        mnt = doc
+          .data()
+          .invoiceDate.toDate()
+          .getMonth();
+        invoiced[mnt] = invoiced[mnt] + doc.data().totalSum;
         if (doc.data().paymentStatus === "unpaid") {
-          totalOutstanding = totalOutstanding + doc.data().totalSum;
+          outstanding[mnt] = outstanding[mnt] + doc.data().totalSum;
         }
       });
 
-      //Renders the HTML for the Dashboard
+      //Renders the inner Table for the Dashboard
       currentlyActiveModal = "dashboardModal";
       $("dashboard-modal-btn").style.display = "inline-block";
       $("invoices-modal-btn").style.display = "none";
       $("clients-modal-btn").style.display = "none";
       $("dashboard-modal-btn").style.display = "inline-block";
-      $("content-responsive").innerHTML = `
-      <h2>Dashboard</h2>
-      <p>Total Invoiced: <span id="total-invoice-amount">€ ${totalInvoiced}</span></p>
-      <p>Total Outstanding: <span id="total-invoice-amount">€ ${totalOutstanding}</span></p>
-      `;
+
+      $("dashboard-table").innerHTML = `
+        <tr>
+        <td>January</td>
+        <td>€${invoiced[0]}</td>
+        <td>€${outstanding[0]}</td>
+        </tr>
+        <tr>
+        <td>February</td>
+        <td>€${invoiced[1]}</td>
+        <td>€${outstanding[1]}</td>
+        </tr>
+        <tr>
+        <td>Mars</td>
+        <td>€${invoiced[2]}</td>
+        <td>€${outstanding[2]}</td>
+        </tr>
+        <tr>
+        <td>April</td>
+        <td>€${invoiced[3]}</td>
+        <td>€${outstanding[3]}</td>
+        </tr>
+        <tr>
+        <td>May</td>
+        <td>€${invoiced[4]}</td>
+        <td>€${outstanding[4]}</td>
+        </tr>
+        <tr>
+        <td>June</td>
+        <td>€${invoiced[5]}</td>
+        <td>€${outstanding[5]}</td>
+        </tr>
+        <tr>
+        <td>July</td>
+        <td>€${invoiced[6]}</td>
+        <td>€${outstanding[6]}</td>
+        </tr>
+        <tr>
+        <td>August</td>
+        <td>€${invoiced[7]}</td>
+        <td>€${outstanding[7]}</td>
+        </tr>
+        <tr>
+        <td>September</td>
+        <td>€${invoiced[8]}</td>
+        <td>€${outstanding[8]}</td>
+        </tr>
+        <tr>
+        <td>October</td>
+        <td>€${invoiced[9]}</td>
+        <td>€${outstanding[9]}</td>
+        </tr>
+        <tr>
+        <td>November</td>
+        <td>€${invoiced[10]}</td>
+        <td>€${outstanding[10]}</td>
+        </tr>
+        <tr>
+        <td>December</td>
+        <td>€${invoiced[11]}</td>
+        <td>€${outstanding[11]}</td>
+        </tr>`;
     });
 }
 
@@ -659,7 +767,11 @@ function renderInvoices() {
         //Renders the table
         let invoiceItem = `<tr id="${doc.id}">
         <td>${doc.data().invoiceNbr}</td>
-        <td>${doc.data().invoiceDate}</td>
+        <td>${doc
+          .data()
+          .invoiceDate.toDate()
+          .toISOString()
+          .slice(0, 10)}</td>
         <td>${doc.data().companyName}</td>
         <td>€ ${doc.data().totalAmount}</td>
         <td onclick="togglePaymentStatus('${doc.id}', '${
