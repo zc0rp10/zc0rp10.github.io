@@ -1,0 +1,630 @@
+@font-face {
+  font-family: "MontserratLight";
+  font-weight: normal;
+  src: url(../fonts/Montserrat-Light.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "MontserratRegular";
+  font-weight: normal;
+  src: url(../fonts/Montserrat-Regular.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "MontserratBold";
+  font-weight: bold;
+  src: url(../fonts/Montserrat-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-weight: normal;
+  src: url("../fonts/Barlow-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-weight: normal;
+  src: url("../fonts/OpenSans-Regular.ttf");
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-font: "MontserratRegular", sans-serif;
+  --secondary-font: "Barlow", sans-serif;
+  --font-color-bright: #f7fafc;
+  --font-color-dark: #1a202c;
+  --body-font-color: #1a202c;
+  --color-greyblue: #8da8b3;
+  --color-yellow: #fdcd42;
+  --color-darkcyan: #335c67;
+}
+
+html {
+  font-family: var(--secondary-font);
+  font-size: 10px;
+  color: var(--body-font-color);
+  scroll-behavior: smooth;
+}
+
+section {
+  padding: 0 0;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  font-size: 1.6rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440rem;
+  margin: 0 auto;
+}
+
+/* Header Styles */
+.site-header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.75),
+    transparent
+  );
+}
+
+.nav {
+  height: 7.2rem;
+  display: flex;
+  align-items: center;
+  font-family: var(--main-font);
+}
+
+.logo-img {
+  height: 4rem;
+  width: auto;
+  position: absolute;
+  top: 25%;
+  left: 1.5rem;
+}
+
+.menu-toggle {
+  color: var(--font-color-bright);
+  font-size: 2.2rem;
+  position: absolute;
+  top: 50%;
+  right: 2.5rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1500;
+}
+
+.fa-times {
+  display: none;
+}
+
+.nav-list {
+  list-style: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100vh;
+  background-color: var(--main-font-color-dark);
+  padding: 4.8rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 1250;
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.nav::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.5s;
+}
+
+.open .fa-times {
+  display: block;
+}
+
+.open .fa-bars {
+  display: none;
+}
+
+.open .nav-list {
+  transform: translateX(0);
+}
+
+.open .nav::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-item {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-link {
+  /* TODO: Barlow Condensed Font*/
+  display: block;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  transition: color 0.5s;
+  margin: 1rem -0.2px 1rem 0;
+}
+
+.nav-link:hover {
+  color: var(--color-yellow);
+}
+
+/* Hero Section */
+.hero {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
+    url("../images/hero.jpg");
+  background-position: right;
+  background-size: cover;
+  display: flex;
+}
+
+.headings {
+  position: relative;
+  top: 60%;
+  left: 10%;
+  line-height: 1.2;
+}
+
+.headline {
+  color: var(--font-color-bright);
+  font-family: "MontserratLight";
+  font-size: 5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.subheading {
+  color: var(--font-color-bright);
+  font-family: "MontserratBold";
+  font-size: 6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Product Cards */
+.product-cards {
+  display: flex;
+  flex-direction: column;
+}
+
+.firstCard {
+  background-color: var(--color-greyblue);
+  color: var(--font-color-bright);
+}
+
+.secondCard {
+  background-color: var(--font-color-bright);
+}
+
+.thirdCard {
+  background-color: var(--color-darkcyan);
+  color: var(--font-color-bright);
+}
+.card {
+  text-align: center;
+  padding: 5rem 4rem;
+}
+
+.card-title {
+  font-family: MontserratLight;
+  font-size: 3.2rem;
+  text-transform: uppercase;
+}
+
+.bold {
+  font-family: MontserratBold;
+  font-weight: 800;
+}
+
+.card-body {
+  text-align: justify;
+  padding: 2rem 0 3.5rem 0;
+}
+
+.btn {
+  text-transform: uppercase;
+  font-size: 2rem;
+  padding: 1rem 3rem;
+  border: none;
+  border-radius: 0.2rem;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  transform: scale(1.02);
+}
+
+.card-btn {
+  color: var(--font-color-bright);
+  background-color: #24232a;
+}
+
+.card-btn:hover,
+.card-btn:focus {
+  background-color: #4d6f8d;
+}
+
+/* AR Tech Info */
+
+.tech-info-image {
+  min-height: 42rem;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.ar-bg {
+  background-size: cover;
+  background-image: url("../images/ar-phone.jpg");
+}
+
+.tech-description {
+  padding: 5rem 4rem;
+}
+
+.tech-headline {
+  font-size: 2.5rem;
+  font-family: "MontserratBold";
+}
+
+.tech-body {
+  text-align: justify;
+  padding: 2rem 0 3.5rem 0;
+}
+
+/* VR Tech Info */
+.vr-bg {
+  background: url("../images/man-glasses.jpg") no-repeat bottom right;
+  background-position: bottom right;
+  background-size: cover;
+}
+
+/* Help Section */
+.help {
+  background-color: var(--color-greyblue);
+  color: var(--font-color-bright);
+  text-align: center;
+}
+
+.help-description {
+  padding: 5rem 4rem;
+}
+
+.help h2 {
+  font-size: 3rem;
+  font-family: MontserratBold;
+}
+
+.help p {
+  padding: 2rem 0 3.5rem 0;
+  font-size: 1.8rem;
+}
+
+.help-btn {
+  font-family: MontserratBold;
+  border-radius: 50px;
+  color: var(--color-darkcyan);
+  background-color: var(--font-color-bright);
+}
+
+.help-btn:hover,
+.help-btn:focus {
+  background-color: #24232a;
+  color: var(--font-color-bright);
+}
+
+/* Footer Section */
+
+.site-footer {
+  line-height: 2;
+  text-align: center;
+}
+
+.footer-left {
+  font-family: var(--main-font);
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.brand p {
+  font-size: 3rem;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.brand strong {
+  font-family: MontserratBold;
+  font-size: 3.5rem;
+}
+
+.brand .copyright {
+  font-size: 1.1rem;
+  text-transform: initial;
+  padding-top: 1rem;
+}
+
+.social-media h4 {
+  font-size: 2.8rem;
+  font-weight: 100;
+  padding-top: 5rem;
+  padding-bottom: 1.5rem;
+}
+
+.social-media li {
+  list-style-type: none;
+}
+
+.social-media i {
+  font-size: 2.5rem;
+  padding-right: 1.5rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.social-media i:hover,
+.social-media i:focus {
+  color: var(--color-darkcyan);
+}
+
+.footer-right {
+  color: var(--font-color-bright);
+  background-color: var(--color-darkcyan);
+  font-family: var(--secondary-font);
+  padding: 5rem;
+}
+
+.footer-right h4 {
+  font-size: 3rem;
+  font-family: MontserratBold;
+  padding-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.contact {
+  padding-bottom: 5rem;
+}
+
+.contact p {
+  font-size: 1.9rem;
+}
+
+.contact .fa-map-marker-alt {
+  padding-right: 0.5rem;
+}
+
+.links a {
+  display: block;
+  font-size: 1.9rem;
+  color: var(--font-color-bright);
+}
+
+.links a:hover,
+.links a:focus {
+  color: var(--color-yellow);
+}
+
+/* Media Queries */
+
+@media screen and (min-width: 980px) {
+  .logo-img {
+    position: initial;
+    top: initial;
+    left: initial;
+    height: 5rem;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav {
+    justify-content: space-evenly;
+  }
+
+  .nav-list {
+    position: initial;
+    width: initial;
+    height: initial;
+    background-color: transparent;
+    padding: 0;
+    justify-content: initial;
+    flex-direction: row;
+    transform: initial;
+    transition: initial;
+  }
+
+  .nav-item {
+    margin: 0 2.4rem;
+    border: none;
+  }
+
+  .nav-item:last-child {
+    margin-right: 0;
+  }
+
+  .nav-link {
+    font-size: 1.8rem;
+  }
+
+  .active {
+    position: relative;
+  }
+
+  .active::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0.1rem;
+    background-color: #fff;
+    left: 0;
+    bottom: -0.3rem;
+  }
+
+  .hero {
+    background-position: center center;
+  }
+
+  .headings {
+    top: 50%;
+  }
+
+  .headline {
+    font-size: 14rem;
+  }
+
+  .subheading {
+    font-size: 16rem;
+  }
+
+  .cards {
+    display: flex;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-btn {
+    margin: auto auto 0 auto;
+    max-width: 21rem;
+  }
+
+  .tech-description {
+    padding: 5rem 6rem;
+  }
+
+  .tech-info {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .vr-section .tech-info {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+
+  .help-description {
+    padding: 6rem 4rem;
+  }
+
+  .help-description h2 {
+    font-size: 4rem;
+  }
+
+  .help-description p {
+    padding: 6rem 0;
+    font-size: 2.3rem;
+  }
+
+  .site-footer .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    text-align: left;
+  }
+
+  .footer-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .social-media h4 {
+    padding-top: 0;
+  }
+
+  .contact {
+    padding-bottom: 0;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .card {
+    padding: 7rem 6rem;
+  }
+
+  .tech-description {
+    padding: 9rem 7rem;
+  }
+
+  p {
+    font-size: 1.9rem;
+    line-height: 2.8rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .card {
+    padding: 6rem 7rem;
+  }
+
+  .tech-description {
+    padding: 12rem 8rem;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .card {
+    padding: 9rem 10rem;
+  }
+
+  .tech-description {
+    padding: 12rem 10rem;
+  }
+
+  .help-description {
+    padding: 14rem 4rem;
+  }
+
+  .site-footer {
+    padding-left: 2rem;
+  }
+
+  .footer-left {
+    padding: 8rem;
+  }
+
+  .footer-right {
+    padding: 8rem;
+  }
+}
