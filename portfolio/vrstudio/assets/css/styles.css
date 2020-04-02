@@ -268,11 +268,13 @@ p {
   padding: 1rem 3rem;
   border: none;
   border-radius: 0.2rem;
-  transition: 0.5s;
+  transition: all 0.2s ease-in-out;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .btn:hover {
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 
 .card-btn {
@@ -528,7 +530,7 @@ p {
 
   .card-btn {
     margin: auto auto 0 auto;
-    max-width: 21rem;
+    max-width: 23rem;
   }
 
   .tech-description {
