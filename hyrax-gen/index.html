@@ -26,19 +26,27 @@
 
       #title {
         font-size: 3rem;
+        padding-bottom: 3rem;
       }
 
       #image {
         padding: 3rem;
+
+        height: 313px;
+      }
+
+      button {
+        padding: 0.5rem;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <h1 id="title">Which Rock Hyrax are you today?</h1>
-      <img id="image" src="1.png" alt="" />
+
+      <button onclick="randomHyrax()">Hyrax Me</button>
       <br />
-      <button onclick="randomHyrax()">Random</button>
+      <img id="image" src="" alt="" />
     </div>
 
     <script>
