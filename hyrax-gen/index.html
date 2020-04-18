@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Which Rock Hyrax are you today?</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        text-align: center;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: #111111;
+        color: #fdfdfd;
+      }
+
+      .container {
+        max-width: 540px;
+        margin: auto;
+      }
+
+      #title {
+        font-size: 3rem;
+      }
+
+      #image {
+        padding: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="title">Which Rock Hyrax are you today?</h1>
+      <img id="image" src="1.png" alt="" />
+      <br />
+      <button onclick="randomHyrax()">Random</button>
+    </div>
+
+    <script>
+      const hyraxImg = document.getElementById("image");
+
+      function randomHyrax() {
+        const rndNbr = Math.round(Math.random() * 8) + 1;
+        hyraxImg.src = `${rndNbr}.png`;
+      }
+    </script>
+  </body>
+</html>
